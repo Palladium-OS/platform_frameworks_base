@@ -328,7 +328,7 @@ public class NotificationPanelViewController extends PanelViewController {
     private float mDownX;
     private float mDownY;
 
-     private boolean mKeyguardOrShadeShowing;
+    private boolean mKeyguardOrShadeShowing;
 
     private final KeyguardClockPositionAlgorithm
             mClockPositionAlgorithm =
@@ -378,7 +378,7 @@ public class NotificationPanelViewController extends PanelViewController {
     private FalsingManager mFalsingManager;
     private String mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_AFFORDANCE;
 
-     private LockPatternUtils mLockPatternUtils;
+    private LockPatternUtils mLockPatternUtils;
     private boolean mStatusBarLockedOnSecureKeyguard;
 
     private Runnable mHeadsUpExistenceChangedRunnable = () -> {
@@ -648,6 +648,8 @@ public class NotificationPanelViewController extends PanelViewController {
         mSettingsObserver = new SettingsObserver(mHandler);
         mLockPatternUtils = new LockPatternUtils(mView.getContext());
         mScreenDecorations = Dependency.get(ScreenDecorations.class);
+        mSettingsObserver = new SettingsObserver(mHandler);
+        mLockPatternUtils = new LockPatternUtils(mView.getContext());
 
         onFinishInflate();
     }
@@ -1053,7 +1055,7 @@ public class NotificationPanelViewController extends PanelViewController {
     }
 
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled;
+        mQsExpansionEnabled = qsExpansionEnabled&& !isQSEventBlocked();
         if (mQs == null) return;
         mQs.setHeaderClickable(mQsExpansionEnabled);
     }

@@ -5697,13 +5697,6 @@ public final class Settings {
         public static final String LOCKSCREEN_SOLID_UNITS_OPACITY = "lockscreen_solid_units_opacity";
 
         /**
-         * Whether user is allowed to pull down quick settings on secure keyguard.
-         * @hide
-         */
-        public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD =
-                "status_bar_locked_on_secure_keyguard";
-
-        /**
          * media artwork wallpaper blur level on lockscreen
          * @hide
          */
@@ -5982,6 +5975,14 @@ public final class Settings {
          * @hide
          */
         public static final String GAMING_MODE_DYNAMIC_STATE = "gaming_mode_dynamic_state";
+
+        /**
+        /**
+         * Whether user is allowed to pull down quick settings on secure keyguard.
+         * @hide
+         */
+        public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD =
+                "status_bar_locked_on_secure_keyguard";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
