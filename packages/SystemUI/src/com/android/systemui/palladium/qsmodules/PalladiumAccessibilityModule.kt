@@ -17,8 +17,8 @@
 package com.android.systemui.palladium.qsmodules
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
-import com.android.systemui.qs.tiles.WifiTile
 import com.android.systemui.qs.tiles.CaffeineTile
+import com.android.systemui.qs.tiles.SyncTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -33,4 +33,9 @@ interface PalladiumAccessibilityModule {
     @StringKey(CaffeineTile.TILE_SPEC)
     fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>    
     
+    /** Inject SyncTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(SyncTile.TILE_SPEC)
+    fun bindSyncTile(syncTile: SyncTile): QSTileImpl<*>     
 }
