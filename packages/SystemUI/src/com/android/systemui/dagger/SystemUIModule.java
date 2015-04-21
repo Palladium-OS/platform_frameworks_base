@@ -62,6 +62,7 @@ import com.android.systemui.model.SysUiState;
 import com.android.systemui.motiontool.MotionToolModule;
 import com.android.systemui.palladium.qsmodules.PalladiumAccessibilityModule;
 import com.android.systemui.palladium.qsmodules.PalladiumConnectivityModule;
+import com.android.systemui.palladium.qsmodules.PalladiumNotificationModule;
 import com.android.systemui.navigationbar.NavigationBarComponent;
 import com.android.systemui.notetask.NoteTaskModule;
 import com.android.systemui.people.PeopleModule;
@@ -182,6 +183,7 @@ import javax.inject.Named;
             MotionToolModule.class,
             PalladiumAccessibilityModule.class,
             PalladiumConnectivityModule.class,
+            PalladiumNotificationModule.class,
             PeopleHubModule.class,
             PeopleModule.class,
             PluginModule.class,
