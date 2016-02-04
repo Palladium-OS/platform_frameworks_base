@@ -60,6 +60,7 @@ import com.android.systemui.log.table.TableLogBuffer;
 import com.android.systemui.mediaprojection.appselector.MediaProjectionModule;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.motiontool.MotionToolModule;
+import com.android.systemui.palladium.qsmodules.PalladiumAccessibilityModule;
 import com.android.systemui.palladium.qsmodules.PalladiumConnectivityModule;
 import com.android.systemui.navigationbar.NavigationBarComponent;
 import com.android.systemui.notetask.NoteTaskModule;
@@ -179,6 +180,7 @@ import javax.inject.Named;
             LogModule.class,
             MediaProjectionModule.class,
             MotionToolModule.class,
+            PalladiumAccessibilityModule.class,
             PalladiumConnectivityModule.class,
             PeopleHubModule.class,
             PeopleModule.class,
