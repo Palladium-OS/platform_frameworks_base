@@ -2016,6 +2016,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.XTENSIONS_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2039,6 +2042,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void update() {
             setFpToDismissNotifications();
             setQsRowsColumns();
+            setSBSleepGesture();
         }
     }
 
@@ -2046,6 +2050,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFpDismissNotifications = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS, 1,
                 UserHandle.USER_CURRENT) == 1;
+    }
+    
+    private void setSBSleepGesture() {
+        if (mNotificationShadeWindowViewController != null)
+            mNotificationShadeWindowViewController.updateSettings();
     }
 
     private void setQsRowsColumns() {
