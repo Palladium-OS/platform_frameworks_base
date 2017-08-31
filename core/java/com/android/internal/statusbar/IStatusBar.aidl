@@ -286,4 +286,8 @@ oneway interface IStatusBar
     void runGcForTest();
 
     void killForegroundApp();
+
+     /**
+     */
+    void toggleCameraFlash();
 }
