@@ -355,7 +355,6 @@ public final class ShutdownThread extends Thread {
                     pd.setIndeterminate(true);
                 }
             }
-            }
         } else if (mReason != null && mReason.equals(PowerManager.REBOOT_BOOTLOADER) && mAdvancedReboot) {
             if (showSysuiReboot()) {
                 return null;
