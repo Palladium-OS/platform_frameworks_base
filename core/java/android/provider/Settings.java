@@ -5147,6 +5147,13 @@ public final class Settings {
         public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED_OPTION = "anbi_enabled_option";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5278,6 +5285,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
             PRIVATE_SETTINGS.add(VOLUME_BUTTON_MUSIC_CONTROL);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
+            PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
         }
 
         /**
