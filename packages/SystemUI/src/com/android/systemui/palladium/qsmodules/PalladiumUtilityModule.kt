@@ -18,6 +18,7 @@ package com.android.systemui.palladium.qsmodules
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.UsbTetherTile
+import com.android.systemui.qs.tiles.CompassTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -30,6 +31,12 @@ interface PalladiumUtilityModule {
     @Binds
     @IntoMap
     @StringKey(UsbTetherTile.TILE_SPEC)
-    fun bindUsbTetherTile(usbTetherTile: UsbTetherTile): QSTileImpl<*>    
+    fun bindUsbTetherTile(usbTetherTile: UsbTetherTile): QSTileImpl<*>   
+
+    /** Inject CompassTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(CompassTile.TILE_SPEC)
+    fun bindCompassTile(compassTile: CompassTile): QSTileImpl<*>  
    
 }
