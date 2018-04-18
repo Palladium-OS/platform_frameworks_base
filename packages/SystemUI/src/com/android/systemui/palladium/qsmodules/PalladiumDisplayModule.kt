@@ -18,6 +18,7 @@ package com.android.systemui.palladium.qsmodules
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.AmbientDisplayTile
+import com.android.systemui.qs.tiles.AODTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -32,4 +33,9 @@ interface PalladiumDisplayModule {
     @StringKey(AmbientDisplayTile.TILE_SPEC)
     fun bindAmbientDisplayTile(ambientDisplayTile: AmbientDisplayTile): QSTileImpl<*>    
       
+    /** Inject AODTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(AODTile.TILE_SPEC)
+    fun bindAODTile(aodTile: AODTile): QSTileImpl<*>        
 }
