@@ -105,5 +105,6 @@ public class SystemSettings {
         Settings.System.KEYGAURD_MEDIA_ART,
         Settings.System.AUTO_BRIGHTNESS_ONE_SHOT,
         Settings.System.FULLSCREEN_GESTURES,
+        Settings.System.LOCKSCREEN_BATTERY_INFO,
     };
 }
