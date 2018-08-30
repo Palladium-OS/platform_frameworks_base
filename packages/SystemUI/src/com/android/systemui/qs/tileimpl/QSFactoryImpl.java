@@ -314,7 +314,7 @@ public class QSFactoryImpl implements QSFactory {
             case "smartpixels":
                 return mSmartPixelsTileProvider.get();
             case "weather":
-                return mWeatherTile.get();
+                return mWeatherTileProvider.get();
         }
 
         // Custom tiles
