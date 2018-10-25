@@ -51,9 +51,14 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
 
     private final ConfigurationController.ConfigurationListener mConfigurationListener =
             new ConfigurationController.ConfigurationListener() {
+
                 @Override
                 public void onDensityOrFontScaleChanged() {
                     mView.scaleBatteryMeterViews();
+                }
+
+                public void onOverlayChanged() {
+                    mView.updateShowPercent();
                 }
             };
 
