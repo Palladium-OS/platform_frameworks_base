@@ -5623,6 +5623,13 @@ public final class Settings {
         public static final String SBC_HD_PRIORITY = "sbc_hd_priority";
 
         /**
+         * Ambient screen settings
+         * "screen_brightness_array=0:1:2:3:4"
+         * @hide
+         */
+        public static final String ALWAYS_ON_DISPLAY_CONSTANTS_CUST = "always_on_display_constants_cust";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
