@@ -181,4 +181,7 @@
 
     <bool name="config_has_weird_dt_sensor">false</bool>
 
+    <!-- Shows the required view for in-display fingerprint -->
+    <bool name="config_supportsInDisplayFingerprint">false</bool>
+
 </resources>
