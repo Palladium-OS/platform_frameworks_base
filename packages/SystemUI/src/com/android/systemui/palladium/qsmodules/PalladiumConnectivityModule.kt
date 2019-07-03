@@ -19,6 +19,7 @@ package com.android.systemui.palladium.qsmodules
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.WifiTile
 import com.android.systemui.qs.tiles.CellularTile
+import com.android.systemui.qs.tiles.VpnTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -38,4 +39,10 @@ interface PalladiumConnectivityModule {
     @IntoMap
     @StringKey(CellularTile.TILE_SPEC)
     fun bindCellularTile(cellularTile: CellularTile): QSTileImpl<*>    
+
+    /** Inject VpnTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(VpnTile.TILE_SPEC)
+    fun bindVpnTile(vpnTile: VpnTile): QSTileImpl<*>        
 }
