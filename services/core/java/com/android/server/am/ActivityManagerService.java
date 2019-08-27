@@ -5556,7 +5556,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             storageManager.commitChanges();
         } catch (Exception e) {
             PowerManager pm = (PowerManager)
-                     mInjector.getContext().getSystemService(Context.POWER_SERVICE);
+                     mContext.getSystemService(Context.POWER_SERVICE);
             pm.reboot("Checkpoint commit failed");
         }
 
