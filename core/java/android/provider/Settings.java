@@ -5747,7 +5747,7 @@ public final class Settings {
          */
         public static final String SCREEN_FLASH_NOTIFICATION_COLOR =
                 "screen_flash_notification_color_global";
-                
+
         /**  
          * Whether the phone ringtone should be played in an increasing manner
          * @hide
@@ -11459,6 +11459,12 @@ public final class Settings {
          */
         public static final String HBM_SETTING_KEY =
                 "com.android.server.display.HBM_SETTING_KEY";
+        
+        /** 
+         * Control whether the process CPU info meter should be shown.
+         * @hide
+         */
+        public static final String SHOW_CPU_OVERLAY = "show_cpu_overlay";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
