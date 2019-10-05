@@ -173,4 +173,8 @@
     <dimen name="config_buttonBrightnessSettingDefaultFloat">0.4</dimen>
     <bool name="config_deviceHasVariableButtonBrightness">false</bool>
 
+    <!-- -1 means use same as config_screenBrightnessDoze -->
+    <integer name="config_screenBrightnessPulse">-1</integer>
+
+
 </resources>

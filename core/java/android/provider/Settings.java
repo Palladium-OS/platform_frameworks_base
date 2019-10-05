@@ -5731,6 +5731,20 @@ public final class Settings {
          */
         public static final String OMNI_DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
 
+         /**
+         * User definable value of pulse notification screen brightness
+         *
+         * @hide
+         */
+        public static final String OMNI_PULSE_BRIGHTNESS = "pulse_brightness";
+
+        /**
+         * User definable value of aod screen brightness
+         *
+         * @hide
+         */
+        public static final String OMNI_DOZE_BRIGHTNESS = "doze_brightness";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -5894,6 +5908,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_ART);
             PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
+            PRIVATE_SETTINGS.add(OMNI_PULSE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(OMNI_DOZE_BRIGHTNESS);
         }
 
         /**
