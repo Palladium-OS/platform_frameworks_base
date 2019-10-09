@@ -1055,7 +1055,7 @@ public class NotificationPanelViewController extends PanelViewController {
     }
 
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled&& !isQSEventBlocked();
+        mQsExpansionEnabled = qsExpansionEnabled;
         if (mQs == null) return;
         mQs.setHeaderClickable(mQsExpansionEnabled);
     }
