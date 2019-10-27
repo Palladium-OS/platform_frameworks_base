@@ -5117,6 +5117,11 @@ public final class Settings {
         public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
 
         /**
+         * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, gpu freq: 3, gpu load: 4
+         */
+        public static final String QS_SYSTEM_INFO = "qs_system_info";
+
+        /**
          * Whether to use new QS panel bg tint or not
          * @hide
          */
