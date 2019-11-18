@@ -10640,6 +10640,12 @@ public final class Settings {
          */
         public static final String TETHERING_ALLOW_VPN_UPSTREAMS = "tethering_allow_vpn_upstreams";
 
+          /**
+         * Whether to show or hide the arrow for back gesture
+         * @hide
+         */
+        public static final String SHOW_BACK_ARROW_GESTURE = "show_back_arrow_gesture";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
