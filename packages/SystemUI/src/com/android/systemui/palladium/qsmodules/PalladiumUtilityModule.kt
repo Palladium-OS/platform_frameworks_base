@@ -21,6 +21,7 @@ import com.android.systemui.qs.tiles.UsbTetherTile
 import com.android.systemui.qs.tiles.CompassTile
 import com.android.systemui.qs.tiles.CPUInfoTile
 import com.android.systemui.qs.tiles.FPSInfoTile
+import com.android.systemui.qs.tiles.MonoToggleTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -52,5 +53,11 @@ interface PalladiumUtilityModule {
     @IntoMap
     @StringKey(FPSInfoTile.TILE_SPEC)
     fun bindFPSInfoTile(fpsInfoTile: FPSInfoTile): QSTileImpl<*>         
+    
+    /** Inject MonoToggleTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(MonoToggleTile.TILE_SPEC)
+    fun bindMonoToggleTile(monoToggleTile: MonoToggleTile): QSTileImpl<*>            
    
 }
