@@ -7440,5 +7440,7 @@ message MetricsEvent {
     PALLADIUM = 1803;
     ATOMICHUB = 1804;
 
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 2001;
   }
 }
