@@ -7441,5 +7441,9 @@ message MetricsEvent {
     PALLADIUM = 1803;
     PALLADIUM_SETTINGS = 2000;
     PALLADIUM_QS_TILES = 2001;
+
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 2002;
+
   }
 }
