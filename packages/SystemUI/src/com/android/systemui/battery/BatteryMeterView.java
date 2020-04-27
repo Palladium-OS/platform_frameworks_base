@@ -229,7 +229,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
             mThemedDrawable.setCharging(mCharging);
             mCircleDrawable.setCharging(mCharging);
             mFullCircleDrawable.setCharging(mCharging);
-            updateShowPercent(false);
+            updateShowPercent();
         } else {
             updatePercentText();
         }
@@ -239,7 +239,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mThemedDrawable.setPowerSaveEnabled(isPowerSave);
         mCircleDrawable.setPowerSaveEnabled(isPowerSave);
         mFullCircleDrawable.setPowerSaveEnabled(isPowerSave);
-        updateShowPercent(false);
+        updateShowPercent();
     }
 
     private TextView loadPercentView() {
@@ -338,7 +338,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                     mBatteryPercentView.setTextAppearance(mPercentageStyleId);
                 }
                 if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
-                updatePercentText();
                 addView(mBatteryPercentView,
                         new ViewGroup.LayoutParams(
                                 LayoutParams.WRAP_CONTENT,
