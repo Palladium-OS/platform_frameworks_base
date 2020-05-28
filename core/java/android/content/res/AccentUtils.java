@@ -22,6 +22,22 @@ public class AccentUtils {
                     "accent_device_default_dark",
                     "material_pixel_blue_dark",
                     "material_pixel_blue_bright",
+                    "colorAccent",
+                    "alert_dialog_color_accent_light",
+                    "alert_dialog_color_accent_dark",
+                    "lockscreen_clock_accent_color",
+                    "dismiss_all_icon_color",
+                    "material_pixel_blue_dark",
+                    "material_pixel_blue_bright",
+                    "omni_color5",
+                    "omni_color4",
+                    "oneplus_accent_color",
+                    "oneplus_accent_text_color",
+                    "dialer_theme_color",
+                    "dialer_theme_color_dark",
+                    "dialer_theme_color_20pct",
+                    "settings_accent_color",
+                    "settingsHeaderColor",
                     "gradient_start"));
 
     private static ArrayList<String> systemuiResources = new ArrayList<>(
