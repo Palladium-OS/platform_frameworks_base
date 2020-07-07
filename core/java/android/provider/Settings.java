@@ -5571,6 +5571,12 @@ public final class Settings {
         public static final String SMART_CUTOFF_RESUME_TEMPERATURE = "smart_cutoff_resume_temperature";
 
         /**
+         * SBC HD priority - whether to use dual channel for SBC by default
+         * @hide
+         */
+        public static final String SBC_HD_PRIORITY = "sbc_hd_priority";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
