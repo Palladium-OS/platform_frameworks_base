@@ -21,7 +21,24 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Outline;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff.Mode;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -72,8 +89,14 @@ public class QSContainerImpl extends FrameLayout {
     private int mContentPaddingEnd = -1;
     private boolean mAnimateBottomOnNextLayout;
 
+
+    private boolean mImmerseMode;
+
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Handler mHandler = new Handler();
+        SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
+        mSettingsObserver.observe();
     }
 
     @Override
@@ -87,6 +110,7 @@ public class QSContainerImpl extends FrameLayout {
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mBackground = findViewById(R.id.quick_settings_background);
         updateResources();
+        updateSettings();
         mHeader.getHeaderQsPanel().setMediaVisibilityChangedListener((visible) -> {
             if (mHeader.getHeaderQsPanel().isShown()) {
                 mAnimateBottomOnNextLayout = true;
@@ -122,6 +146,31 @@ public class QSContainerImpl extends FrameLayout {
         updateResources();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
     }
+
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.DISPLAY_CUTOUT_MODE), false,
+                    this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    private void updateSettings() {
+        ContentResolver resolver = getContext().getContentResolver();
+        mImmerseMode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
+    }
+
 
     @Override
     public boolean performClick() {
