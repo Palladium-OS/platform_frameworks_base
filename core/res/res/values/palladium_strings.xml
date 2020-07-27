@@ -22,4 +22,7 @@
 
     <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
     <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Calls and notifications will ring</string>
+
 </resources>
