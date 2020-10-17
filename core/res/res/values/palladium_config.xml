@@ -177,8 +177,7 @@
     <integer name="config_screenBrightnessPulse">-1</integer>
 
     <!-- Default value for Ambient Pulse light color -->
-    <integer name="config_AmbiantPulseLightColor" >0x3980FF</integer>
-    
-    <integer name="pulse_ambient_light_color">0x3980FF</integer>
+    <integer name="config_ambientNotificationDefaultColor">0xFF3980FF</integer>
+
 
 </resources>
