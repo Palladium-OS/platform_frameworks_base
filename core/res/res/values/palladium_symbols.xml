@@ -44,7 +44,7 @@
     <!-- Device keyhandlers -->
     <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
     <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
-    
+
     <!-- Cycle through ringer modes -->
     <java-symbol type="string" name="volume_dialog_ringer_guidance_normal" />
 
@@ -91,4 +91,17 @@
 
   <!-- Whether device has SuperDart charging support -->
   <java-symbol type="bool" name="config_hasSuperDartCharger" />
+
+
+    <!-- Advanced reboot -->
+  <java-symbol type="string" name="reboot_to_recovery_title" />
+  <java-symbol type="string" name="reboot_to_recovery_message" />
+  <java-symbol type="string" name="reboot_to_bootloader_title" />
+  <java-symbol type="string" name="reboot_to_bootloader_message" />
+  <java-symbol type="string" name="reboot_title" />
+  <java-symbol type="string" name="reboot_message" />
+
+    <!-- Global Actions pref list -->
+  <java-symbol type="array" name="custom_config_globalActionsList" />
+
 </resources>
