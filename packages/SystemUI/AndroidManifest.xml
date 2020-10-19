@@ -314,6 +314,7 @@
 
     <!-- Asus Long screenshot -->
     <uses-permission android:name="com.asus.stitchimage.permission.EXPORTED_FOR_ASUS_APPS"/>
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <application
         android:name=".SystemUIApplication"
