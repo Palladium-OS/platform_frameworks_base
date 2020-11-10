@@ -179,5 +179,6 @@
     <!-- Default value for Ambient Pulse light color -->
     <integer name="config_ambientNotificationDefaultColor">0xFF3980FF</integer>
 
+    <bool name="config_has_weird_dt_sensor">false</bool>
 
 </resources>
