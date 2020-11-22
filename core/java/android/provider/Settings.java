@@ -5718,6 +5718,18 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_MEDIA_ART = "lockscreen_media_art";
+        
+        /**
+         * Whether to enable DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE = "doze_on_charge";
+
+        /**
+         * hidden stting of the current atate of DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -5881,6 +5893,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_ART);
+            PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
         }
 
         /**

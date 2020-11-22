@@ -62,7 +62,7 @@ public class AODTile extends QSTileImpl<State> implements
                 Settings.Secure.DOZE_ALWAYS_ON, 0, UserHandle.USER_CURRENT);
         if (aodState == 0) {
             aodState = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.DOZE_ON_CHARGE, 0, UserHandle.USER_CURRENT) == 1 ? 2 : 0;
+                    Settings.System.OMNI_DOZE_ON_CHARGE, 0, UserHandle.USER_CURRENT) == 1 ? 2 : 0;
         }
         return aodState;
     }
@@ -90,7 +90,7 @@ public class AODTile extends QSTileImpl<State> implements
                 Settings.Secure.DOZE_ALWAYS_ON, aodState == 2 ? 0 : aodState,
                 UserHandle.USER_CURRENT);
         Settings.System.putIntForUser(mContext.getContentResolver(),
-                Settings.System.DOZE_ON_CHARGE, aodState == 2 ? 1 : 0, UserHandle.USER_CURRENT);
+                Settings.System.OMNI_DOZE_ON_CHARGE, aodState == 2 ? 1 : 0, UserHandle.USER_CURRENT);
         refreshState();
     }
 
