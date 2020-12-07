@@ -395,11 +395,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
         }
 
         if (mAllowFancy) {
-            animateBrightnessSlider(firstPageBuilder);
-
-            mFirstPageAnimator = firstPageBuilder
-                    .setListener(this)
-                    .build();
             // Fade in the tiles/labels as we reach the final position.
             Builder builder = new Builder()
                     .addFloat(tileLayout, "alpha", 0, 1);
@@ -422,6 +417,40 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
                 // In portrait, media view should always be visible
                 mQsPanelController.mMediaHost.hostView.setAlpha(1.0f);
             }
+
+            animateBrightnessSlider(firstPageBuilder);
+
+            mFirstPageAnimator = firstPageBuilder
+                    .setListener(this)
+                    .build();
+            // Make brightness appear static position and alpha in through second half.
+            // If brightness is showing at the bottom fade in as we reach the final position
+            View brightness = mQsPanelController.getBrightnessView();
+            if (brightness != null) {
+                boolean bottom = mTunerService.getValue(
+                        QSPanel.QS_BRIGHTNESS_POSITION_BOTTOM, 0) == 1;
+                if (bottom) {
+                    builder.addFloat(brightness, "alpha", 0, 1);
+                    mBrightnessAnimator = null;
+                } else {
+                    firstPageBuilder.addFloat(brightness, "translationY",
+                            brightness.getMeasuredHeight() * 0.5f, 0);
+                    mBrightnessAnimator = new TouchAnimator.Builder()
+                            .addFloat(brightness, "alpha", 0, 1)
+                            .addFloat(brightness, "sliderScaleY", 0.3f, 1)
+                            .setInterpolator(Interpolators.ALPHA_IN)
+                            .setStartDelay(0.3f)
+                            .build();
+                    mAllViews.add(brightness);
+                }
+                mAllViews.add(brightness);
+            } else {
+                mBrightnessAnimator = null;
+            }
+            mFirstPageAnimator = firstPageBuilder
+                    .setListener(this)
+                    .build();
+
             mAllPagesDelayedAnimator = builder.build();
             mAllViews.add(mSecurityFooter.getView());
             translationYBuilder.setInterpolator(mQSExpansionPathInterpolator.getYInterpolator());
