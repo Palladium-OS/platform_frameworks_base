@@ -38,7 +38,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Dependency;
@@ -480,7 +482,6 @@ public class KeyguardStatusBarView extends RelativeLayout
         mCarrierLabel.setTextAppearance(
                 Utils.getThemeAttr(mContext, com.android.internal.R.attr.textAppearanceSmall));
         onThemeChanged();
-        mBatteryView.updatePercentView();
     }
 
     private void updateIconsAndTextColors() {
