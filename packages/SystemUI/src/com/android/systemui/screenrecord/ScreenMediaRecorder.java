@@ -52,6 +52,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import com.android.systemui.media.MediaProjectionCaptureTarget;
+import com.android.systemui.R;
 
 import java.io.Closeable;
 import java.io.File;
@@ -92,6 +93,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private ScreenRecordingAudioSource mAudioSource;
     private final MediaProjectionCaptureTarget mCaptureRegion;
     private final Handler mHandler;
+    private int mMaxRefreshRate;
 
     private boolean mLowQuality;
     private boolean mLongerDuration;
@@ -110,6 +112,8 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mCaptureRegion = captureRegion;
         mListener = listener;
         mAudioSource = audioSource;
+        mMaxRefreshRate = mContext.getResources().getInteger(
+                R.integer.config_screenRecorderMaxFramerate);
     }
 
     public void setLowQuality(boolean low) {
@@ -160,6 +164,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getRealMetrics(metrics);
         int refreshRate =  mLowQuality ? LOW_FRAME_RATE : (int) wm.getDefaultDisplay().getRefreshRate();
+        if (mMaxRefreshRate != 0 && refreshRate > mMaxRefreshRate) refreshRate = mMaxRefreshRate;
         int[] dimens = getSupportedSize(metrics.widthPixels, metrics.heightPixels, refreshRate);
         int width = dimens[0];
         int height = dimens[1];
