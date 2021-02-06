@@ -127,4 +127,7 @@
   <!-- Enable face auth only when swiping security view -->
   <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
 
+  <!-- Screen recorder framerate limit -->
+  <java-symbol type="integer" name="config_screenRecorderMaxFramerate" />
+
 </resources>
