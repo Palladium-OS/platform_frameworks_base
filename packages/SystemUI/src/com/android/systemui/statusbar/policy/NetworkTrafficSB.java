@@ -105,6 +105,9 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     private boolean iBytes;
     private boolean oBytes;
 
+    private ConnectivityManager mConnectivityManager;
+    private boolean mStatusbarExpanded;
+
     private Handler mTrafficHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -203,6 +206,10 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
             totalTxBytes = newTotalTxBytes;
             clearHandlerCallbacks();
             mTrafficHandler.postDelayed(mRunnable, INTERVAL);
+        }
+
+        protected boolean restoreViewQuickly() {
+            return getConnectAvailable() && mAutoHideThreshold == 0;
         }
 
         private CharSequence formatOutput(long timeDelta, long data, String symbol) {
@@ -354,6 +361,8 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = resources.getColor(android.R.color.white);
         Handler mHandler = new Handler();
+        mConnectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         setMode();
@@ -404,9 +413,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     };
 
     private boolean getConnectAvailable() {
-        ConnectivityManager connManager =
-                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = (connManager != null) ? connManager.getActiveNetworkInfo() : null;
+        NetworkInfo network = (mConnectivityManager != null) ? mConnectivityManager.getActiveNetworkInfo() : null;
         return network != null;
     }
 
@@ -552,6 +559,10 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     @Override
     public boolean isIconVisible() {
         return mIsEnabled;
+    }
+
+    public void onPanelExpanded(boolean isExpanded) {
+        mStatusbarExpanded = isExpanded;
     }
 
     @Override
