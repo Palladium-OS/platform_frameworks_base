@@ -6265,6 +6265,12 @@ public final class Settings {
          */
         public static final String QQS_ICONS = "qqs_count";
 
+        /**
+         * Whether to change the transparency of the StatusBar Background
+         * @hide
+         */
+        public static final String SB_BG_ALPHA = "sb_bg_alpha";
+
 	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.

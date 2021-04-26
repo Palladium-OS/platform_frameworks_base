@@ -164,6 +164,9 @@ public class NotificationPanelViewController extends PanelViewController {
      */
     private static final int FLING_EXPAND = 0;
 
+
+    int mSBBGAlpha;
+
     /**
      * Fling collapsing QS, potentially stopping when QS becomes QQS.
      */
@@ -648,6 +651,9 @@ public class NotificationPanelViewController extends PanelViewController {
                 break;
         }
         mView.setBackgroundColor(systemuiColor);
+        if (mSBBGAlpha < 255) {
+                mView.getBackground().setAlpha(mSBBGAlpha);
+        }
         OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener();
         mView.addOnAttachStateChangeListener(onAttachStateChangeListener);
         if (mView.isAttachedToWindow()) {
@@ -2963,6 +2969,9 @@ public class NotificationPanelViewController extends PanelViewController {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                             .getUriFor(Settings.System.SB_BG_ALPHA), false,
+                     this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2986,6 +2995,12 @@ public class NotificationPanelViewController extends PanelViewController {
             mStatusBarLockedOnSecureKeyguard = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 0,
                     UserHandle.USER_CURRENT) == 1;
+            mSBBGAlpha = Settings.System.getIntForUser(resolver,
+                Settings.System.SB_BG_ALPHA, 255,
+                UserHandle.USER_CURRENT);
+            if ( mSBBGAlpha < 255 ) {
+                mView.getBackground().setAlpha(mSBBGAlpha);
+            }
         }
     }
 
@@ -3874,6 +3889,9 @@ public class NotificationPanelViewController extends PanelViewController {
         @Override
         public void onUiModeChanged() {
             mView.setBackgroundColor(systemuiColor);
+            if ( mSBBGAlpha < 255 ) {
+                mView.getBackground().setAlpha(mSBBGAlpha);
+            }
              reInflateViews();
         }
     }
@@ -3904,6 +3922,9 @@ public class NotificationPanelViewController extends PanelViewController {
                                 : mKeyguardStateController.calculateGoingToFullShadeDelay();
                 mQs.animateHeaderSlidingIn(delay);
                  mView.setBackgroundColor(systemuiColor);
+                if (mSBBGAlpha < 255 ) {
+                    mView.getBackground().setAlpha(mSBBGAlpha);
+                }
             } else if (oldState == StatusBarState.SHADE_LOCKED
                     && statusBarState == StatusBarState.KEYGUARD) {
                 animateKeyguardStatusBarIn(StackStateAnimator.ANIMATION_DURATION_STANDARD);
@@ -3919,9 +3940,14 @@ public class NotificationPanelViewController extends PanelViewController {
                 mKeyguardStatusBar.setAlpha(1f);
                 mKeyguardStatusBar.setVisibility(keyguardShowing ? View.VISIBLE : View.INVISIBLE);
                 mView.setBackgroundColor(keyguardShowing ? Color.TRANSPARENT : systemuiColor);
-
+                if (mSBBGAlpha < 255 ) {
+                    mView.getBackground().setAlpha(mSBBGAlpha);
+                }
                 if(oldState == StatusBarState.KEYGUARD && mQsFullyExpanded ){
                     mView.setBackgroundColor(systemuiColor);
+                    if (mSBBGAlpha < 255 ) {
+                        mView.getBackground().setAlpha(mSBBGAlpha);
+                    }
                 }
                 if (keyguardShowing && oldState != mBarState) {
                     if (mQs != null) {
@@ -4026,6 +4052,9 @@ public class NotificationPanelViewController extends PanelViewController {
 
             if((mQsExpanded || mQsFullyExpanded)&& keyguardShowing){
               mView.setBackgroundColor(systemuiColor);
+              if (mSBBGAlpha < 255) {
+                mView.getBackground().setAlpha(mSBBGAlpha);
+              }
               if(mKeyguardStatusView != null){
                     mKeyguardStatusView.setVisibility(View.INVISIBLE);
                 }
