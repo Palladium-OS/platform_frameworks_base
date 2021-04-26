@@ -6253,6 +6253,12 @@ public final class Settings {
          */
         public static final String USE_ACCENTBG = "use_accentbg";
 
+        /**
+         * Whether to use transparent background for heads up notification
+         * @hide
+         */
+        public static final String HEADSUP_USE_TRANSPARENT_BACKGROUND = "headsup_use_transparent_background";
+
 	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -6430,6 +6436,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
             PRIVATE_SETTINGS.add(AICP_LOCKSCREEN_WEATHER_STYLE);
             PRIVATE_SETTINGS.add(USE_ACCENTBG);
+            PRIVATE_SETTINGS.add(HEADSUP_USE_TRANSPARENT_BACKGROUND);
         }
 
         /**

@@ -93,5 +93,6 @@ public class SystemSettings {
         Settings.System.LOCKSCREEN_MEDIA_ART,
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.USE_ACCENTBG,
+        Settings.System.HEADSUP_USE_TRANSPARENT_BACKGROUND,
     };
 }

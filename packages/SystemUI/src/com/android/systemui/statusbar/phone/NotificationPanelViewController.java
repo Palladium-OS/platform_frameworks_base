@@ -3759,14 +3759,28 @@ public class NotificationPanelViewController extends PanelViewController {
     private class MyOnHeadsUpChangedListener implements OnHeadsUpChangedListener {
         @Override
         public void onHeadsUpPinnedModeChanged(final boolean inPinnedMode) {
+            boolean setHeadsUpTransparentBG=  Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                    Settings.System.HEADSUP_USE_TRANSPARENT_BACKGROUND, 0, UserHandle.USER_CURRENT) == 1;
             mNotificationStackScroller.setInHeadsUpPinnedMode(inPinnedMode);
             if (inPinnedMode) {
                 mHeadsUpExistenceChangedRunnable.run();
                 updateNotificationTranslucency();
+                if(setHeadsUpTransparentBG){
+                     mView.setBackgroundColor(Color.TRANSPARENT);
+                }
+                else{
+                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                }
             } else {
                 setHeadsUpAnimatingAway(true);
                 mNotificationStackScroller.runAfterAnimationFinished(
                         mHeadsUpExistenceChangedRunnable);
+                if(setHeadsUpTransparentBG){
+                     mView.setBackgroundColor(Color.TRANSPARENT);
+                }
+                else{
+                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                }
             }
             updateGestureExclusionRect();
             mHeadsUpPinnedMode = inPinnedMode;
