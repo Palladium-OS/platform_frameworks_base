@@ -2174,11 +2174,18 @@ public class NotificationPanelViewController extends PanelViewController {
 
     private void updatePanelExpanded() {
         boolean isExpanded = !isFullyCollapsed() || mExpectingSynthesizedDown;
+        boolean keyguardShowing = mBarState == StatusBarState.KEYGUARD;
         if (mPanelExpanded != isExpanded) {
             mHeadsUpManager.setIsPanelExpanded(isExpanded);
             mStatusBarTouchableRegionManager.setPanelExpanded(isExpanded);
             mStatusBar.setPanelExpanded(isExpanded);
             mPanelExpanded = isExpanded;
+            if(!keyguardShowing){
+                mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                if ( mSBBGAlpha < 255) {
+                    mView.getBackground().setAlpha(mSBBGAlpha);
+                }
+            }
         }
     }
 
@@ -3780,6 +3787,9 @@ public class NotificationPanelViewController extends PanelViewController {
                 }
                 else{
                     mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                    if ( mSBBGAlpha < 255) {
+                        mView.getBackground().setAlpha(mSBBGAlpha);
+                     }
                 }
             }
             updateGestureExclusionRect();
@@ -4027,8 +4037,7 @@ public class NotificationPanelViewController extends PanelViewController {
                     mKeyguardStatusView.setVisibility(View.VISIBLE);
                 }
             }
-
-
+            
             updateExpandedHeight(getExpandedHeight());
             updateHeader();
 
