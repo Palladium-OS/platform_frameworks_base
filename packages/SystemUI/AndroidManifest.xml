@@ -317,6 +317,9 @@
     <uses-permission android:name="com.asus.stitchimage.permission.EXPORTED_FOR_ASUS_APPS"/>
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
+    <!-- Volume Plugin -->
+    <protected-broadcast android:name="com.android.systemui.action.PLUGIN_CHANGED"/>    
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
