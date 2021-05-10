@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.clock.ClockLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start|top">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="start|top"
+        android:layout_marginTop="80dp"
+        android:gravity="start"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="265dp"
+            android:layout_height="265dp"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:layout_centerInParent="true"
+            android:max="100"
+            android:progress="65"
+            android:progressDrawable="@drawable/circular_progress_bar" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextClock
+                    android:id="@+id/clockTimeHHView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="none"
+                    android:letterSpacing="0.03"
+                    android:format12Hour="h"
+                    android:format24Hour="kk"
+                    android:textColor="?android:attr/colorAccent"
+                    android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+                    android:textStyle="bold"
+                    android:textSize="45.5sp" />
+
+                <TextClock
+                   android:id="@+id/clockTimeMMView"
+                    android:textSize="45.5sp"
+                    android:layout_width="wrap_content"
+                    android:ellipsize="none"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:letterSpacing="0.03"
+                    android:format12Hour=":mm"
+                    android:format24Hour=":mm"
+                    android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+                    android:textColor="?android:textColorPrimary"/>
+
+             </LinearLayout>
+
+            <TextClock
+                android:id="@+id/clockDateView"
+                style="@stype/widget_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:letterSpacing="0.03"
+                android:gravity="center"
+                android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+                android:format12Hour="EEE, MMM d"
+                android:format24Hour="EEE, MMM d"/>
+
+            <TextView
+                android:id="@+id/battery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+                android:text="100%"
+                android:paddingTop="20dp"
+                android:layout_gravity="center"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</com.android.keyguard.clock.ClockLayout>
