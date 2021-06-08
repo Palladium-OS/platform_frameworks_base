@@ -176,4 +176,7 @@
 
   <!-- App Lock -->
   <java-symbol type="string" name="lockscreen_pattern_instructions" />
+
+  <!-- OnePlus haptic motor -->
+  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
 </resources>
