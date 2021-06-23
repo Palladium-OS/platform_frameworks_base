@@ -38,5 +38,7 @@
     <dimen name="analog_clock_height">100dp</dimen>
     <dimen name="date_padding">8dp</dimen>
     <dimen name="clock_bottom_margin">8dp</dimen>
+    <dimen name="ssos_clock_left_padding">20dp</dimen>
+    <dimen name="ide_clock_left_padding">40dp</dimen>
 
 </resources>
