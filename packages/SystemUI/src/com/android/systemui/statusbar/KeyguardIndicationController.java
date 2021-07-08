@@ -436,6 +436,16 @@ public class KeyguardIndicationController implements StateListener,
             // Walk down a precedence-ordered list of what indication
             // should be shown based on user or device state
             if (mDozing) {
+                int userId = KeyguardUpdateMonitor.getCurrentUser();
+            String trustGrantedIndication = getTrustGrantedIndication();
+            String trustManagedIndication = getTrustManagedIndication();
+
+            String powerIndication = null;
+            if (mPowerPluggedIn || mEnableBatteryDefender) {
+                powerIndication = computePowerIndication();
+            }
+
+            boolean isError = false;
                 // When dozing we ignore any text color and use white instead, because
                 // colors can be hard to read in low brightness.
                 mTextView.setTextColor(Color.WHITE);
@@ -444,6 +454,21 @@ public class KeyguardIndicationController implements StateListener,
                 } else if (!mBatteryPresent) {
                     // If there is no battery detected, hide the indication and bail
                     mIndicationArea.setVisibility(View.GONE);
+                    } else if (!mKeyguardUpdateMonitor.isUserUnlocked(userId)) {
+                mTextView.switchIndication(com.android.internal.R.string.lockscreen_storage_locked);
+            } else if (!TextUtils.isEmpty(mTransientIndication)) {
+                mTextView.switchIndication(mTransientIndication);
+                isError = mTransientTextIsError;
+            } else if (!TextUtils.isEmpty(trustGrantedIndication)
+                    && mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
+                if (powerIndication != null) {
+                    String indication = mContext.getResources().getString(
+                            R.string.keyguard_indication_trust_unlocked_plugged_in,
+                            trustGrantedIndication, powerIndication);
+                    mTextView.switchIndication(indication);
+                } else {
+                    mTextView.switchIndication(trustGrantedIndication);
+                }
                 } 
                 else if (!TextUtils.isEmpty(mAlignmentIndication)) {
                     mTextView.switchIndication(mAlignmentIndication);
@@ -461,14 +486,15 @@ public class KeyguardIndicationController implements StateListener,
                     boolean showAmbientBattery = Settings.System.getIntForUser(mContext.getContentResolver(),
                         Settings.System.AMBIENT_BATTERY_PERCENT, 0, UserHandle.USER_CURRENT) != 0;
                     if (showAmbientBattery) {
-                        String bolt = "\u26A1\uFE0E";
-                        CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
-                                NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
-                        mTextView.switchIndication(chargeIndicator);
+                        String percentage = NumberFormat.getPercentInstance()
+                            .format(mBatteryLevel / 100f);
+                    mTextView.switchIndication(percentage);
                     } else {
                         mTextView.switchIndication(null);
                     }
                 }
+               mTextView.setTextColor(isError ? Utils.getColorError(mContext)
+                    : mInitialTextColorState);
                 updateChargingIndication();
                 return;
             }
@@ -528,6 +554,7 @@ public class KeyguardIndicationController implements StateListener,
             }
             mTextView.setTextColor(isError ? Utils.getColorError(mContext)
                     : mInitialTextColorState);
+                    updateChargingIndication();
             if (hideIndication) {
                 mIndicationArea.setVisibility(View.GONE);
             }
