@@ -18,12 +18,14 @@ package com.android.keyguard;
 
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
