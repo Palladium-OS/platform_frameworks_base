@@ -179,7 +179,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new PalladiumClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new AndroidSClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new AndroidSDP3ClockController(res, layoutInflater, colorExtractor));
-
+        addBuiltinClock(() -> new AndroidTwelveClockController(res, layoutInflater, colorExtractor));
         // Store the size of the display for generation of clock preview.
         DisplayMetrics dm = res.getDisplayMetrics();
         mWidth = dm.widthPixels;
