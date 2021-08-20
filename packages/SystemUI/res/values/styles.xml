@@ -663,6 +663,17 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <!-- Used to style Lottie charging animations -->
+    <style name="ChargingLottieAnim" />
+
+    <style name="ChargingLottieAnim.WallpaperBackground">
+        <item name="android:textColor">?attr/wallpaperTextColor</item>
+    </style>
+
+    <style name="ChargingLottieAnim.DarkBackground">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <!-- Screen recording -->
     <style name="ScreenRecord" parent="Theme.SystemUI.Dialog.GlobalActions">
         <item name="android:windowIsTranslucent">true</item>
