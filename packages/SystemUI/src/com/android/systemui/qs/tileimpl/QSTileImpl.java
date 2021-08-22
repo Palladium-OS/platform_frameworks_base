@@ -30,11 +30,8 @@ import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 import android.annotation.CallSuper;
 import android.annotation.NonNull;
 import android.app.ActivityManager;
-import android.content.res.ColorUtils;
-import android.content.res.Configuration;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.metrics.LogMaker;
 import android.os.Handler;
@@ -44,7 +41,6 @@ import android.os.UserHandle;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.provider.Settings;
-import android.provider.Settings.System;
 import android.service.quicksettings.Tile;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
@@ -71,7 +67,6 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.State;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.R;
 import com.android.systemui.qs.PagedTileLayout.TilePage;
 import com.android.systemui.qs.QSEvent;
 import com.android.systemui.qs.QSHost;
@@ -81,7 +76,6 @@ import com.android.systemui.qs.logging.QSLogger;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Base quick-settings tile, extend this to create a new tile.
@@ -531,12 +525,6 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     public abstract CharSequence getTileLabel();
 
     public static int getColorForState(Context context, int state) {
-        int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT);
-
-        boolean qsIconPrimary = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_TILE_ICON_PRIMARY, 0, UserHandle.USER_CURRENT) == 1;
-
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
                 return Utils.getDisabled(context,
@@ -544,33 +532,12 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
             case Tile.STATE_INACTIVE:
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
             case Tile.STATE_ACTIVE:
-                 if (setQsUseNewTint == 1) {
-                     return ColorUtils.genRandomAccentColor(isThemeDark(context));
-                 } else if (setQsUseNewTint == 2) {
-                     return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-                 } else {
-                     if (qsIconPrimary) {
-                         return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
-                     } else {
-                         return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
-                     }
-                 }
+                return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
             default:
                 Log.e("QSTile", "Invalid state " + state);
                 return 0;
         }
     }
-
-    private static Boolean isThemeDark(Context context) {
-        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
-            case Configuration.UI_MODE_NIGHT_YES:
-              return true;
-            case Configuration.UI_MODE_NIGHT_NO:
-              return false;
-            default:
-              return false;
-        }
-     }
 
     protected final class H extends Handler {
         private static final int ADD_CALLBACK = 1;

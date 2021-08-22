@@ -5180,22 +5180,6 @@ public final class Settings {
         public static final String QS_SYSTEM_INFO = "qs_system_info";
 
         /**
-         * Whether to use new QS panel bg tint or not
-         * @hide
-         */
-        public static final String QS_PANEL_BG_USE_NEW_TINT = "qs_panel_bg_use_new_tint";
-
-        /**
-         * @hide
-         */
-        public static final String QS_LABEL_USE_NEW_TINT = "qs_label_use_new_tint";
-
-        /**
-         * @hide
-         */
-        public static final String QS_TILE_ICON_PRIMARY = "qs_tile_icon_primary";
-
-        /**
          * Xtensions Style
          * @hide
          */
@@ -5404,12 +5388,6 @@ public final class Settings {
          */
         public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
         public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
-
-        /**
-         * Whether to display qs tile titles in the qs panel
-         * @hide
-         */
-        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
          * Show data usage in QS header
@@ -5768,7 +5746,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(TORCH_LONG_PRESS_POWER_TIMEOUT);
             PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
             PRIVATE_SETTINGS.add(VOLUME_BUTTON_MUSIC_CONTROL);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
             PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
             PRIVATE_SETTINGS.add(ALLOW_INCALL_HOME);
             PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
