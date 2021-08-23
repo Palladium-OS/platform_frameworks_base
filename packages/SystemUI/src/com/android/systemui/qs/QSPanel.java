@@ -35,10 +35,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import android.provider.Settings;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEventLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -54,7 +52,6 @@ import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTileView;
 import com.android.systemui.qs.QSHost.Callback;
-import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.qs.customize.QSCustomizer;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.logging.QSLogger;
@@ -80,13 +77,8 @@ import javax.inject.Named;
 public class QSPanel extends LinearLayout implements Tunable, Callback, BrightnessMirrorListener,
         Dumpable {
 
-    private static final String QS_SHOW_AUTO_BRIGHTNESS =
-            Settings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
-    public static final String QS_SHOW_BRIGHTNESS_SLIDER_EXPANDED =
-            Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER_EXPANDED;
+    public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
     public static final String QS_SHOW_HEADER = "qs_show_header";
-    public static final String QS_BRIGHTNESS_POSITION_BOTTOM =
-            Settings.Secure.QS_BRIGHTNESS_POSITION_BOTTOM;
 
     private static final String TAG = "QSPanel";
 
@@ -94,7 +86,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private final BroadcastDispatcher mBroadcastDispatcher;
     protected final MediaHost mMediaHost;
-    protected int mIsQuickQsBrightnessEnabled = 2;
 
     /**
      * The index where the content starts that needs to be moved between parents
@@ -104,7 +95,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     @Nullable
     protected View mBrightnessView;
-    protected ImageView mAutoBrightnessView;
     @Nullable
     private BrightnessController mBrightnessController;
 
@@ -118,7 +108,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     protected boolean mExpanded;
     protected boolean mListening;
-    private boolean mIsAutomaticBrightnessAvailable = false;
 
     private QSDetail.Callback mCallback;
     private final DumpManager mDumpManager;
@@ -157,8 +146,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private int mFooterMarginStartHorizontal;
     private Consumer<Boolean> mMediaVisibilityChangedListener;
 
-    // custom
-    private boolean mBrightnessBottom;
 
     @Inject
     public QSPanel(
@@ -240,12 +227,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             R.layout.quick_settings_brightness_dialog, this, false);
         addView(mBrightnessView);
         mBrightnessController = new BrightnessController(getContext(),
-                findViewById(R.id.brightness_icon),
                 findViewById(R.id.brightness_slider), mBroadcastDispatcher);
-        mAutoBrightnessView = findViewById(R.id.brightness_icon);
-
-        mIsAutomaticBrightnessAvailable = getResources().getBoolean(
-                com.android.internal.R.bool.config_automatic_brightness_available);
     }
 
     protected QSTileLayout createRegularTileLayout() {
@@ -351,8 +333,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, QS_SHOW_AUTO_BRIGHTNESS, QS_SHOW_BRIGHTNESS_SLIDER_EXPANDED);
-        tunerService.addTunable(this, QS_BRIGHTNESS_POSITION_BOTTOM);
+        tunerService.addTunable(this, QS_SHOW_BRIGHTNESS);
 
         if (mHost != null) {
             setTiles(mHost.getTiles());
@@ -394,33 +375,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_AUTO_BRIGHTNESS.equals(key) && mIsAutomaticBrightnessAvailable) {
-            updateViewVisibilityForTuningValue(mAutoBrightnessView, newValue);
-        } else if (QS_SHOW_BRIGHTNESS_SLIDER_EXPANDED.equals(key) && mBrightnessView != null) {
+        if (QS_SHOW_BRIGHTNESS.equals(key) && mBrightnessView != null) {
             updateViewVisibilityForTuningValue(mBrightnessView, newValue);
-        } else if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
-            if (newValue == null || Integer.parseInt(newValue) == 0) {
-                removeView(mBrightnessView);
-                addView(mBrightnessView, 0);
-                mBrightnessBottom = false;
-            } else {
-                removeView(mBrightnessView);
-                addView(mBrightnessView, getBrightnessViewPositionBottom());
-                mBrightnessBottom = true;
-            }
-        } else if (QuickStatusBarHeader.QQS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
-            mIsQuickQsBrightnessEnabled = TunerService.parseInteger(newValue, 2);
         }
-    }
-
-    private int getBrightnessViewPositionBottom() {
-        for (int i = 0; i < getChildCount(); i++) {
-            View v = getChildAt(i);
-            if (v == mSecurityFooter.getView()) {
-                return i;
-            }
-        }
-        return 0;
     }
 
     private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
@@ -683,14 +640,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         }
     }
 
-    public boolean shouldUseHorizontalLayout() {
+    private boolean shouldUseHorizontalLayout() {
         return mUsingMediaPlayer && mMediaHost.getVisible()
                 && getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    boolean isMediaHostVisible() {
-        return mMediaHost.getVisible();
     }
 
     protected void reAttachMediaHost() {
@@ -1251,9 +1204,4 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         int getNumVisibleTiles();
     }
-
-    public boolean isBrightnessViewBottom() {
-        return mBrightnessBottom;
-    }
-
 }

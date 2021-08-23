@@ -10187,32 +10187,6 @@ public final class Settings {
         public static final String NAVBAR_INVERSE_LAYOUT = "navbar_inverse_layout";
 
         /**
-         * @hide
-         */
-        public static final String QS_SHOW_AUTO_BRIGHTNESS =
-                "qs_show_auto_brightness";
-
-        /**
-         * Whether to show qs brightness slider in quickbar
-         * @hide
-         */
-        public static final String QSS_SHOW_BRIGHTNESS_SLIDER =
-                "qqs_show_brightness_slider";
-
-        /**
-         * Whether to show qs brightness slider when qs is expanded
-         * @hide
-         */
-        public static final String QS_SHOW_BRIGHTNESS_SLIDER_EXPANDED =
-                "qs_show_brightness_slider_show_expanded";
-
-        /**
-         * Whether to show QS brightness slider on bottom
-         * @hide
-         */
-        public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
-
-        /**
          * Whether to hide lock icon on lockscreen
          * {@hide}
          */
