@@ -150,10 +150,8 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
     private int mActualLayoutWidth = NO_VALUE;
     private float mActualPaddingEnd = NO_VALUE;
     private float mActualPaddingStart = NO_VALUE;
-    private int mCustomPaddingStart;
     private boolean mDozing;
     private boolean mOnLockScreen;
-    private boolean mCenter;
     private boolean mChangingViewPositions;
     private int mAddAnimationStartIndex = -1;
     private int mCannedAnimationStartIndex = -1;
@@ -386,7 +384,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
      * If this is not a whole number, the fraction means by how much the icon is appearing.
      */
     public void calculateIconTranslations() {
-        float translationX = getActualPaddingStart() + (mCenter ? 0: mCustomPaddingStart);
+        float translationX = getActualPaddingStart();
         int firstOverflowIndex = -1;
         int childCount = getChildCount();
         int maxVisibleIcons = mOnLockScreen ? MAX_VISIBLE_ICONS_ON_LOCK :
@@ -459,7 +457,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             mFirstVisibleIconState = mIconStates.get(getChildAt(0));
         }
 
-        boolean center = mCenter;
+        boolean center = mOnLockScreen;
         if (center && translationX < getLayoutEnd()) {
             float initialTranslation =
                     mFirstVisibleIconState == null ? 0 : mFirstVisibleIconState.xTranslation;
@@ -694,14 +692,6 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
 
     public void setOnLockScreen(boolean onLockScreen) {
         mOnLockScreen = onLockScreen;
-    }
-
-    public void setCenter(boolean center) {
-        mCenter = center && mOnLockScreen;
-    }
-
-    public void setCustomPaddingStart(int padding) {
-        mCustomPaddingStart = padding;
     }
 
     public class IconState extends ViewState {

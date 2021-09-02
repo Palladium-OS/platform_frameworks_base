@@ -38,10 +38,4 @@
     <dimen name="date_padding">8dp</dimen>
     <dimen name="clock_bottom_margin">8dp</dimen>
 
-     <!-- Custom clock -->
-   <dimen name="custom_clock_left_padding">50dp</dimen>
-   <dimen name="ide_clock_left_padding">40dp</dimen>
-   <dimen name="s_clock_left_padding">20dp</dimen>
-
-
 </resources>
