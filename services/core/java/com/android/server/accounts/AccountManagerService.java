@@ -3072,7 +3072,8 @@ public class AccountManagerService
                     .setContentTitle(title)
                     .setContentText(subtitle)
                     .setContentIntent(PendingIntent.getActivityAsUser(mContext, 0, intent,
-                            PendingIntent.FLAG_CANCEL_CURRENT, null, user))
+                            PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE,
+                            null, user))
                     .build();
         installNotification(getCredentialPermissionNotificationId(
                 account, authTokenType, uid), n, packageName, user.getIdentifier());
@@ -5294,7 +5295,8 @@ public class AccountManagerService
                         .setContentTitle(String.format(notificationTitleFormat, account.name))
                         .setContentText(message)
                         .setContentIntent(PendingIntent.getActivityAsUser(
-                                mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT,
+                                mContext, 0, intent,
+                                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE,
                                 null, new UserHandle(userId)))
                         .build();
                 installNotification(id, n, packageName, userId);
