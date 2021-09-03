@@ -86,7 +86,7 @@ public class PalladiumClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock for time, date, day and month
@@ -118,18 +118,18 @@ public class PalladiumClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.palladium_clock, null);
-        mTimeHH = mView.findViewById(R.id.clockTimeHHView);
-        mTimeMM = mView.findViewById(R.id.clockTimeMMView);
-        mDate = mView.findViewById(R.id.clockDateView);
-        mBatt = mView.findViewById(R.id.battery);
-        progressC=mView.findViewById(R.id.progressBar);
+        mTimeHH = mBigClockView.findViewById(R.id.clockTimeHHView);
+        mTimeMM = mBigClockView.findViewById(R.id.clockTimeMMView);
+        mDate = mBigClockView.findViewById(R.id.clockDateView);
+        mBatt = mBigClockView.findViewById(R.id.battery);
+        progressC=mBigClockView.findViewById(R.id.progressBar);
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mTimeHH = null;
         mTimeMM = null;
         mDate = null;
@@ -167,20 +167,20 @@ public class PalladiumClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
-            createViews();
-        }
-        return mView;
-    }
-
-    @Override
-    public View getBigClockView() {
         return null;
     }
 
     @Override
+    public View getBigClockView() {
+        if (mBigClockView == null) {
+            createViews();
+        }
+        return mBigClockView;
+    }
+
+    @Override
     public int getPreferredY(int totalHeight) {
-        return CLOCK_USE_DEFAULT_Y;
+         return totalHeight / 2;
     }
 
     @Override
@@ -206,8 +206,8 @@ public class PalladiumClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
-        if (mView != null){
-            mView.setDarkAmount(darkAmount);
+        if (mBigClockView != null){
+            mBigClockView.setDarkAmount(darkAmount);
         }
     }
 
@@ -225,7 +225,7 @@ public class PalladiumClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-        mView.onTimeChanged();
+        mBigClockView.onTimeChanged();
         mTimeHH.refreshTime();
         mTimeMM.refreshTime();
         mDate.refreshTime();
