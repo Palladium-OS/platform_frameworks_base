@@ -72,6 +72,7 @@
             <TextClock
                 android:id="@+id/clockDateView"
                 style="@stype/widget_big"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -89,7 +90,7 @@
                 android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
                 android:text="100%"
                 android:paddingTop="20dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:textSize="14sp"/>
 
         </LinearLayout>
