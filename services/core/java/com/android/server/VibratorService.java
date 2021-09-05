@@ -166,7 +166,6 @@ public class VibratorService extends IVibratorService.Stub
     private ExternalVibration mCurrentExternalVibration;
     private boolean mVibratorUnderExternalControl;
     private boolean mLowPowerMode;
-    private boolean mHasOnePlusHapticMotor;
     @GuardedBy("mLock")
     private boolean mIsVibrating;
     @GuardedBy("mLock")
@@ -394,10 +393,6 @@ public class VibratorService extends IVibratorService.Stub
 
         mAllowPriorityVibrationsInLowPowerMode = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_allowPriorityVibrationsInLowPowerMode);
-
-        // We use amplitude control as a means to control the intensity of vibration
-        mHasOnePlusHapticMotor = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasOnePlusHapticMotor);
 
         mPreviousRingVibrations = new LinkedList<>();
         mPreviousNotificationVibrations = new LinkedList<>();
@@ -1104,8 +1099,6 @@ public class VibratorService extends IVibratorService.Stub
             return false;
         }
 
-        // XXX: AppOps is randomly rejecting vibration calls from SystemUI
-        /*
         final int mode = getAppOpMode(vib.uid, vib.opPkg, vib.attrs);
         if (mode != AppOpsManager.MODE_ALLOWED) {
             if (mode == AppOpsManager.MODE_ERRORED) {
@@ -1114,7 +1107,7 @@ public class VibratorService extends IVibratorService.Stub
                 Slog.w(TAG, "Would be an error: vibrate from uid " + vib.uid);
             }
             return false;
-        }*/
+        }
 
         return true;
     }
@@ -1277,28 +1270,11 @@ public class VibratorService extends IVibratorService.Stub
     }
 
     private void doVibratorOn(long millis, int amplitude, int uid, VibrationAttributes attrs) {
-        doVibratorOn(millis, amplitude, uid, attrs, false);
-    }
-
-    private void doVibratorOn(long millis, int amplitude, int uid, VibrationAttributes attrs, boolean waveform) {
         Trace.traceBegin(Trace.TRACE_TAG_VIBRATOR, "doVibratorOn");
         try {
             synchronized (mInputDeviceVibrators) {
                 if (amplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
                     amplitude = mDefaultVibrationAmplitude;
-                }
-                if (mHasOnePlusHapticMotor) {
-                    final int usage = attrs.getUsage();
-                    if (isRingtone(usage)) {
-                        amplitude = waveform ? amplitude : mDefaultVibrationAmplitude
-                                * mRingIntensity / Vibrator.VIBRATION_INTENSITY_HIGH;
-                    } else if (isNotification(usage)) {
-                        amplitude = waveform ? amplitude : mDefaultVibrationAmplitude
-                                * mNotificationIntensity / Vibrator.VIBRATION_INTENSITY_HIGH;
-                    } else if (isHapticFeedback(usage)) {
-                        amplitude = waveform ? amplitude : mDefaultVibrationAmplitude
-                                * mHapticFeedbackIntensity / Vibrator.VIBRATION_INTENSITY_HIGH;
-                    }
                 }
                 if (DEBUG) {
                     Slog.d(TAG, "Turning vibrator on for " + millis + " ms" +
@@ -1314,13 +1290,8 @@ public class VibratorService extends IVibratorService.Stub
                     // Note: ordering is important here! Many haptic drivers will reset their
                     // amplitude when enabled, so we always have to enable first, then set the
                     // amplitude.
-                    if (mHasOnePlusHapticMotor) {
-                        doVibratorSetAmplitude(amplitude);
-                        vibratorOn(millis);
-                    } else {
-                        vibratorOn(millis);
-                        doVibratorSetAmplitude(amplitude);
-                    }
+                    vibratorOn(millis);
+                    doVibratorSetAmplitude(amplitude);
                 }
             }
         } finally {
@@ -1688,7 +1659,7 @@ public class VibratorService extends IVibratorService.Stub
                                     // appropriate intervals.
                                     onDuration = getTotalOnDuration(timings, amplitudes, index - 1,
                                             repeat);
-                                    doVibratorOn(onDuration, amplitude, mUid, mAttrs, true);
+                                    doVibratorOn(onDuration, amplitude, mUid, mAttrs);
                                 } else {
                                     doVibratorSetAmplitude(amplitude);
                                 }

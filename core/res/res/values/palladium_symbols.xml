@@ -177,9 +177,6 @@
   <!-- App Lock -->
   <java-symbol type="string" name="lockscreen_pattern_instructions" />
 
-  <!-- OnePlus haptic motor -->
-  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
-
   <!-- Pocket Lock -->
   <java-symbol type="layout" name="pocket_lock_view" />
 
@@ -205,4 +202,5 @@
 
   <!-- Whether device supports in-display fingerprint when screen is turned off -->
     <java-symbol type="bool" name="config_supportsScreenOffInDisplayFingerprint" />
+
 </resources>

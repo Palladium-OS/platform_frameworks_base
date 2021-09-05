@@ -67,6 +67,7 @@
 
     <!-- True if the notification's should dynamically tint the app icon and text -->
     <bool name="config_allowNotificationIconTextTinting">true</bool>
+
     <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
          backgrounds -->
     <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
@@ -160,7 +161,6 @@
     <!-- Enable face auth only when swiping security view -->
     <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
 
-
     <!-- If not zero, limits the internal screen recorder's framerate to the set value. -->
     <integer name="config_screenRecorderMaxFramerate">0</integer>
 
@@ -205,10 +205,6 @@
 
     <!-- Whether key handler sends intent when changing slider position -->
     <string name="config_alertSliderIntent"></string>
-
-    <!-- OnePlus uses a proprietary vibrator hal to utilize the new powerful motor since the
-         OnePlus 7 Pro. -->
-    <bool name="config_hasOnePlusHapticMotor">false</bool>
 
     <!-- Defines the sysfs attribute path used by pocket bridge
          to communicate pocket state to the pocket judge kernel driver. -->
