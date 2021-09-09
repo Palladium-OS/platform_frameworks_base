@@ -14243,7 +14243,7 @@ public class BatteryStatsImpl extends BatteryStats {
         if (mBatteryStatsConfig.shouldResetOnUnplugHighBatteryLevel()) {
             // Allow resetting due to currently being at high battery level
             if (batteryStatus == BatteryManager.BATTERY_STATUS_FULL) return true;
-            if (batteryLevel >= 90) return true;
+            if (batteryLevel >= 95) return true;
         }
         if (mBatteryStatsConfig.shouldResetOnUnplugAfterSignificantCharge()) {
             // Allow resetting after a significant charge (from a very low level to a now very
