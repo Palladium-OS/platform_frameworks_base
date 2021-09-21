@@ -206,6 +206,8 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private int mRightInset;
     private int mSysUiFlags;
 
+    private boolean mIsBackGestureArrowEnabled;
+
     // For Tf-Lite model.
     private BackGestureTfClassifierProvider mBackGestureTfClassifierProvider;
     private Map<String, Integer> mVocab;
@@ -305,6 +307,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
         mEdgeHapticEnabled = mGestureNavigationSettingsObserver.getEdgeHaptic();
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
+        mIsBackGestureArrowEnabled = mGestureNavigationSettingsObserver.getBackArrowGesture();
 
         mYDeadzoneDivider = mGestureNavigationSettingsObserver.getDeadZoneMode();
 
@@ -685,6 +688,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
                     && isWithinTouchRegion((int) ev.getX(), (int) ev.getY());
             if (mAllowGesture) {
                 mEdgeBackPlugin.setIsLeftPanel(mIsOnLeftEdge);
+                mEdgeBackPlugin.setBackArrowVisibility(mIsBackGestureArrowEnabled);
                 mEdgeBackPlugin.onMotionEvent(ev);
             }
             if (mLogGesture) {
