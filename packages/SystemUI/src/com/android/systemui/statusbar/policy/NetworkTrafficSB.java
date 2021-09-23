@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.util.Log;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
@@ -96,6 +97,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     private int mAutoHideThreshold;
     private int mNetTrafSize;
     private int mTintColor;
+    private int mTintColornew;
     private int mVisibleState = -1;
     private boolean mTrafficVisible = false;
     private boolean mSystemIconVisible = true;
@@ -107,6 +109,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
 
     private ConnectivityManager mConnectivityManager;
     private boolean mStatusbarExpanded;
+    private boolean isQsExpanded;
 
     private Handler mTrafficHandler = new Handler() {
         @Override
@@ -198,9 +201,14 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
             }
             updateVisibility();
             updateTextSize();
-            if (mShowArrow)
-                updateTrafficDrawable();
-
+            if (mShowArrow){
+                if(mStatusbarExpanded){
+                    updateTrafficDrawable(mTintColornew);
+                }
+                else{
+                    updateTrafficDrawable(mTintColor);
+                }
+            }
             // Post delayed message to refresh in ~1000ms
             totalRxBytes = newTotalRxBytes;
             totalTxBytes = newTotalTxBytes;
@@ -360,6 +368,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
                     : mNetTrafSize;
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = resources.getColor(android.R.color.white);
+        mTintColornew = resources.getColor(R.color.header_date);
         Handler mHandler = new Handler();
         mConnectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -430,7 +439,12 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
                 lastUpdateTime = SystemClock.elapsedRealtime();
                 mTrafficHandler.sendEmptyMessage(1);
             }
-            updateTrafficDrawable();
+            if(mStatusbarExpanded){
+                updateTrafficDrawable(mTintColornew);
+            }
+            else{
+                updateTrafficDrawable(mTintColor);
+            }
             return;
         } else {
             clearHandlerCallbacks();
@@ -460,6 +474,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         mTrafficLayout = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_LAYOUT, 0,
                 UserHandle.USER_CURRENT);
+        updateTrafficDrawable(mTintColor);
     }
 
     private void clearHandlerCallbacks() {
@@ -468,8 +483,9 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         mTrafficHandler.removeMessages(1);
     }
 
-    private void updateTrafficDrawable() {
+    private void updateTrafficDrawable(int mTintColorp) {
         int intTrafficDrawable;
+        setTextColor(mTintColorp);
         if (mIsEnabled && mShowArrow) {
             if (mTrafficType == UP) {
                 if (oBytes) {
@@ -507,13 +523,12 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         }
         if (intTrafficDrawable != 0 && mShowArrow) {
             Drawable d = getContext().getDrawable(intTrafficDrawable);
-            d.setColorFilter(mTintColor, Mode.MULTIPLY);
+            d.setColorFilter(mTintColorp, Mode.MULTIPLY);
             setCompoundDrawablePadding(txtImgPadding);
             setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
         } else {
             setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
-        setTextColor(mTintColor);
     }
 
     private void updateTextSize() {
@@ -548,7 +563,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
         setTextColor(mTintColor);
-        updateTrafficDrawable();
+        updateTrafficDrawable(mTintColor);
     }
 
     @Override
@@ -563,6 +578,23 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
 
     public void onPanelExpanded(boolean isExpanded) {
         mStatusbarExpanded = isExpanded;
+        if(!mStatusbarExpanded){
+            setTextColor(mTintColor);
+            updateTrafficDrawable(mTintColor);
+        }
+    }
+
+    public void onQSPanelExpanded(boolean isExpanded) {
+        Log.d("QSN", "updateQsExpansionEnabled - QS Expand enabled:1");
+        isQsExpanded= isExpanded;
+        if(isQsExpanded){
+            setTextColor(mTintColornew);
+            updateTrafficDrawable(mTintColornew);
+        }
+        else{
+            setTextColor(mTintColor);
+            updateTrafficDrawable(mTintColor);
+        }
     }
 
     @Override
@@ -591,6 +623,10 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     }
 
     private void updateVisibility() {
+        if(mStatusbarExpanded){
+            setTextColor(mTintColornew);
+            updateTrafficDrawable(mTintColornew);
+        }
         if (mIsEnabled && mTrafficVisible && mSystemIconVisible && !mTrafficInHeaderView) {
             setVisibility(View.VISIBLE);
         } else {
@@ -602,8 +638,14 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     @Override
     public void setStaticDrawableColor(int color) {
         mTintColor = color;
-        setTextColor(mTintColor);
-        updateTrafficDrawable();
+        if(mStatusbarExpanded){
+            setTextColor(mTintColornew);
+            updateTrafficDrawable(mTintColornew);
+        }
+        else{
+            setTextColor(mTintColor);
+            updateTrafficDrawable(mTintColor);
+        }
     }
 
     @Override

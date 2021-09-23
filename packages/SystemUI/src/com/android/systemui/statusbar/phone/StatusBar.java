@@ -1813,6 +1813,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 && !mDozing
                 && !ONLY_CORE_APPS;
         mNotificationPanelViewController.setQsExpansionEnabled(expandEnabled);
+        ((StatusBarIconControllerImpl) mIconController).onQSPanelExpanded(expandEnabled);
         if (DEBUG) Log.d(TAG, "updateQsExpansionEnabled - QS Expand enabled: " + expandEnabled);
     }
 

@@ -634,7 +634,7 @@ public class NotificationPanelViewController extends PanelViewController {
         mEntryManager = notificationEntryManager;
         mConversationNotificationManager = conversationNotificationManager;
 
-        mView.setBackgroundColor(Color.TRANSPARENT);
+        mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
         OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener();
         mView.addOnAttachStateChangeListener(onAttachStateChangeListener);
         if (mView.isAttachedToWindow()) {
@@ -3836,7 +3836,10 @@ public class NotificationPanelViewController extends PanelViewController {
         }
 
         @Override
-        public void onUiModeChanged() {}
+        public void onUiModeChanged() {
+            mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+             reInflateViews();
+        }
     }
 
     private class StatusBarStateListener implements StateListener {
@@ -3864,6 +3867,7 @@ public class NotificationPanelViewController extends PanelViewController {
                         mBarState == StatusBarState.SHADE_LOCKED ? 0
                                 : mKeyguardStateController.calculateGoingToFullShadeDelay();
                 mQs.animateHeaderSlidingIn(delay);
+                 mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
             } else if (oldState == StatusBarState.SHADE_LOCKED
                     && statusBarState == StatusBarState.KEYGUARD) {
                 animateKeyguardStatusBarIn(StackStateAnimator.ANIMATION_DURATION_STANDARD);
@@ -3871,12 +3875,18 @@ public class NotificationPanelViewController extends PanelViewController {
                 // Only animate header if the header is visible. If not, it will partially
                 // animate out
                 // the top of QS
+                 mView.setBackgroundColor(Color.TRANSPARENT);
                 if (!mQsExpanded) {
                     mQs.animateHeaderSlidingOut();
                 }
             } else {
                 mKeyguardStatusBar.setAlpha(1f);
                 mKeyguardStatusBar.setVisibility(keyguardShowing ? View.VISIBLE : View.INVISIBLE);
+                mView.setBackgroundColor(keyguardShowing ? Color.TRANSPARENT : mResources.getColor(R.color.systemui_panel));
+
+                if(oldState == StatusBarState.KEYGUARD && mQsFullyExpanded ){
+                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                }
                 if (keyguardShowing && oldState != mBarState) {
                     if (mQs != null) {
                         mQs.hideImmediately();
@@ -3946,7 +3956,7 @@ public class NotificationPanelViewController extends PanelViewController {
             DejankUtils.startDetectingBlockingIpcs("NVP#onLayout");
             super.onLayoutChange(v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom);
             setIsFullWidth(mNotificationStackScroller.getWidth() == mView.getWidth());
-
+            boolean keyguardShowing = mBarState == StatusBarState.KEYGUARD;
             // Update Clock Pivot
             mKeyguardStatusView.setPivotX(mView.getWidth() / 2);
             mKeyguardStatusView.setPivotY(
@@ -3977,6 +3987,22 @@ public class NotificationPanelViewController extends PanelViewController {
             } else if (!mQsExpanded) {
                 setQsExpansion(mQsMinExpansionHeight + mLastOverscroll);
             }
+
+            if((mQsExpanded || mQsFullyExpanded)&& keyguardShowing){
+              mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+              if(mKeyguardStatusView != null){
+                    mKeyguardStatusView.setVisibility(View.INVISIBLE);
+                }
+            }    
+
+            if(!mQsExpanded && keyguardShowing){
+                mView.setBackgroundColor(Color.TRANSPARENT);
+                if(mKeyguardStatusView != null){
+                    mKeyguardStatusView.setVisibility(View.VISIBLE);
+                }
+            }
+
+
             updateExpandedHeight(getExpandedHeight());
             updateHeader();
 

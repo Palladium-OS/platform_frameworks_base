@@ -549,6 +549,7 @@ class NotificationSectionsManager @Inject internal constructor(
         peopleHeaderView?.setTextColor(color)
         silentHeaderView?.setForegroundColor(color)
         alertingHeaderView?.setForegroundColor(color)
+        incomingHeaderView?.setForegroundColor(color)
     }
 
     companion object {

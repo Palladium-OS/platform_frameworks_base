@@ -46,7 +46,7 @@ public class NotificationPanelView extends PanelView {
         setWillNotDraw(!DEBUG);
         mAlphaPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
 
-        setBackgroundColor(Color.TRANSPARENT);
+        // setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override

@@ -879,6 +879,10 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         updateBackgroundDimming();
         mShelf.onUiModeChanged();
         mStatusBar.updateDismissAllButton(mIconColor);
+        int textColor = mContext.getColor(R.color.header_date);
+        mSectionsManager.setHeaderForegroundColor(textColor);
+        mFooterView.setTextColor(textColor);
+        mEmptyShadeView.setTextColor(textColor);
     }
 
     @ShadeViewRefactor(RefactorComponent.DECORATOR)
@@ -4931,8 +4935,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         mUsingLightTheme = lightTheme;
         Context context = new ContextThemeWrapper(mContext,
                 lightTheme ? R.style.Theme_SystemUI_Light : R.style.Theme_SystemUI);
-        final @ColorInt int textColor =
-                Utils.getColorAttrDefaultColor(context, R.attr.wallpaperTextColor);
+        Resources res = context.getResources();
+        int textColor = res.getColor(R.color.header_date);
         mSectionsManager.setHeaderForegroundColor(textColor);
         mFooterView.setTextColor(textColor);
         mEmptyShadeView.setTextColor(textColor);

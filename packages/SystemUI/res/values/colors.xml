@@ -272,4 +272,10 @@
     <color name="misalignment_text_color">#F28B82</color>
 
     <color name="screenrecord_status_color">#E94235</color>
+
+    <!-- New SystemUI -->
+    <color name="systemui_panel">#F5CDCDC5</color>
+    <color name="header_date">#B3000000</color>
+    <color name="qs_tile_new">#BCBBAF</color>
+    <color name="notification_new">#FFE0E0D8</color>
 </resources>

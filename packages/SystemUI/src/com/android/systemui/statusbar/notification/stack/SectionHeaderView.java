@@ -40,12 +40,14 @@ public class SectionHeaderView extends StackScrollerDecorView {
     private ViewGroup mContents;
     private TextView mLabelView;
     private ImageView mClearAllButton;
+    private Context mContext;
     @StringRes @Nullable private Integer mLabelTextId;
     @Nullable private View.OnClickListener mLabelClickListener = null;
     @Nullable private View.OnClickListener mOnClearClickListener = null;
 
     public SectionHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext=context;
     }
 
     @Override
@@ -128,7 +130,8 @@ public class SectionHeaderView extends StackScrollerDecorView {
     }
 
     void setForegroundColor(@ColorInt int color) {
-        mLabelView.setTextColor(color);
+        int nc= mContext.getResources().getDimensionPixelSize(R.color.header_date);
+        mLabelView.setTextColor(nc);
         mClearAllButton.setImageTintList(ColorStateList.valueOf(color));
     }
 }

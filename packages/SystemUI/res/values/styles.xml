@@ -593,7 +593,7 @@
     <style
         name="TextAppearance.NotificationSectionHeaderButton"
         parent="@android:style/Widget.Material.Button.Borderless">
-        <item name="android:textColor">?attr/wallpaperTextColor</item>
+        <item name="android:textColor">@color/header_date</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:minWidth">0dp</item>

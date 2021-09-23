@@ -429,6 +429,14 @@ public interface StatusBarIconController {
             }
         }
 
+        public void onQSPanelExpanded(boolean isExpanded) {
+            for (int i = 0; i < mGroup.getChildCount(); i++) {
+                if (mGroup.getChildAt(i) instanceof NetworkTrafficSB) {
+                    ((NetworkTrafficSB)mGroup.getChildAt(i)).onQSPanelExpanded(isExpanded);
+                }
+            }
+        }
+
 
         public void onSetSignalIcon(int viewIndex, WifiIconState state) {
             StatusBarWifiView wifiView = (StatusBarWifiView) mGroup.getChildAt(viewIndex);

@@ -375,6 +375,12 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
         }
     }
 
+    public void onQSPanelExpanded(boolean isExpanded) {
+        for (IconManager manager : mIconGroups) {
+            manager.onQSPanelExpanded(isExpanded);
+        }
+    }
+
     @Override
     public void onDensityOrFontScaleChanged() {
         loadDimens();

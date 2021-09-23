@@ -89,7 +89,7 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconManager;
 import com.android.systemui.statusbar.phone.StatusBarWindowView;
 import com.android.systemui.statusbar.phone.StatusIconContainer;
-import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.policy.ClockHD;
 import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
@@ -162,7 +162,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mRingerModeIcon;
     private TextView mRingerModeTextView;
     private View mRingerContainer;
-    private Clock mClockView;
+    private ClockHD mClockView;
     private DateView mDateView;
     private OngoingPrivacyChip mPrivacyChip;
     private Space mSpace;
@@ -314,7 +314,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 android.R.attr.colorForeground);
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
-        int fillColorWhite = getContext().getResources().getColor(android.R.color.white);
 
         // Set light text on the header icons because they will always be on a black background
         applyDarkness(R.id.clock, tintArea, 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
@@ -892,8 +891,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 android.R.attr.colorForeground);
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
-        mBatteryRemainingIcon.setColorsFromContext(mHost.getContext());
-        mBatteryRemainingIcon.onDarkChanged(new Rect(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
+        mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
         if(mSystemInfoText != null &&  mSystemInfoIcon != null) {
             updateSystemInfoText();
         }
