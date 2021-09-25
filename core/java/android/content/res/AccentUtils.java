@@ -19,7 +19,13 @@ public class AccentUtils {
                     "material_pixel_blue_bright",
                     "gradient_start"));
 
+    private static ArrayList<String> systemuiResources = new ArrayList<>(
+            Arrays.asList("systemui_panel"));
+
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
+     private static final String SYSTEMUI_COLOR_PROP = "persist.sys.theme.systemuicolor";
+
+
 
     static boolean isResourceAccent(String resName) {
         for (String ar : accentResources)
@@ -28,8 +34,20 @@ public class AccentUtils {
         return false;
     }
 
+    static boolean isResourceSystemUI(String resName) {
+        for (String su : systemuiResources)
+            if (resName.contains(su))
+                return true;
+        return false;
+    }
+
+
     public static int getNewAccentColor(int defaultColor) {
         return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
+    }
+
+    public static int getNewSystemUIColor(int defaultColor) {
+        return getAccentColor(defaultColor, SYSTEMUI_COLOR_PROP);
     }
 
     private static int getAccentColor(int defaultColor, String property) {
