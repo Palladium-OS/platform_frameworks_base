@@ -25,7 +25,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
-import android.content.res.MonetWannabe;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +96,7 @@ public class InstallSuccess extends BottomAlertActivity {
             Button mOk = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
             Button mCancel = mAlert.getButton(DialogInterface.BUTTON_NEGATIVE);
             mOk.setBackgroundResource(R.drawable.dialog_sub_background);
-            mOk.setTextColor(MonetWannabe.manipulateColor(getColorAttrDefaultColor(this, android.R.attr.colorAccent), 0.6f));
+            mOk.setTextColor(getColorAttrDefaultColor(this, android.R.attr.colorAccent));
             mOk.setBackgroundTintList(ColorStateList.valueOf(getColorAttrDefaultColor(this, android.R.attr.colorAccent)));
             mCancel.setBackgroundResource(R.drawable.dialog_sub_background);
             mCancel.setBackgroundTintList(ColorStateList.valueOf(adjustAlpha(getColorAttrDefaultColor(this, android.R.attr.colorForeground), 0.1f)));

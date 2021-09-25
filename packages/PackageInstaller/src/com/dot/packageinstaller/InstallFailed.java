@@ -28,7 +28,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.content.res.MonetWannabe;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,7 +132,7 @@ public class InstallFailed extends BottomAlertActivity {
 
             Button mOk = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
             mOk.setBackgroundResource(R.drawable.dialog_sub_background);
-            mOk.setTextColor(MonetWannabe.manipulateColor(getColorAttrDefaultColor(this, android.R.attr.colorAccent), 0.6f));
+            mOk.setTextColor(getColorAttrDefaultColor(this, android.R.attr.colorAccent));
             mOk.setBackgroundTintList(ColorStateList.valueOf(getColorAttrDefaultColor(this, android.R.attr.colorAccent)));
             ButtonBarLayout buttonBarLayout = ((ButtonBarLayout) mOk.getParent());
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) buttonBarLayout.getLayoutParams();

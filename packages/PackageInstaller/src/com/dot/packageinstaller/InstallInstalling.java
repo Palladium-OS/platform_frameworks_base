@@ -25,7 +25,6 @@ import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageParser;
 import android.content.res.ColorStateList;
-import android.content.res.MonetWannabe;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
