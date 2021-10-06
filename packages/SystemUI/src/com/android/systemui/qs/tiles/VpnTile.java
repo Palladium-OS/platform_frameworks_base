@@ -47,6 +47,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.qs.pipeline.domain.interactor.PanelInteractor;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
@@ -64,6 +65,7 @@ public class VpnTile extends QSTileImpl<BooleanState> {
     private final SecurityController mController;
     private final KeyguardStateController mKeyguard;
     private final Callback mCallback = new Callback();
+    private final PanelInteractor mPanelInteractor;
 
     @Inject
     public VpnTile(
@@ -76,11 +78,13 @@ public class VpnTile extends QSTileImpl<BooleanState> {
             ActivityStarter activityStarter,
             QSLogger qsLogger,
             SecurityController securityController,
-            KeyguardStateController keyguardStateController) {
+            KeyguardStateController keyguardStateController,
+            PanelInteractor panelInteractor) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
         mController = securityController;
         mKeyguard = keyguardStateController;
+        mPanelInteractor = panelInteractor;
     }
 
     @Override
@@ -168,7 +172,7 @@ public class VpnTile extends QSTileImpl<BooleanState> {
                     .setNegativeButton(android.R.string.cancel, null)
                     .create();
             prepareAndShowDialog(dialog);
-            mHost.collapsePanels();
+            mPanelInteractor.collapsePanels();
         });
     }
 
@@ -225,7 +229,7 @@ public class VpnTile extends QSTileImpl<BooleanState> {
                 .create();
 
         prepareAndShowDialog(dialog);
-        mHost.collapsePanels();
+        mPanelInteractor.collapsePanels();
         mUiHandler.post(() -> {
             TextWatcher watcher = new UsernameAndPasswordWatcher(userNameEditor, passwordEditor,
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE));
