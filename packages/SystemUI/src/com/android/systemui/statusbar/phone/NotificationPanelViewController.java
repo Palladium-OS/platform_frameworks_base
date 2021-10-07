@@ -478,6 +478,8 @@ public class NotificationPanelViewController extends PanelViewController {
     private boolean mAllowExpandForSmallExpansion;
     private Runnable mExpandAfterLayoutRunnable;
 
+    private int systemuiColor;
+
     /**
      * Is this a collapse that started on the panel where we should allow the panel to intercept
      */
@@ -633,8 +635,19 @@ public class NotificationPanelViewController extends PanelViewController {
         mLockscreenUserManager = notificationLockscreenUserManager;
         mEntryManager = notificationEntryManager;
         mConversationNotificationManager = conversationNotificationManager;
-
-        mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+        int nightModeFlags =mResources.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                systemuiColor=mResources.getColor(R.color.systemui_panel_dark);
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                systemuiColor=mResources.getColor(R.color.systemui_panel);
+                break;
+            default:
+                systemuiColor=mResources.getColor(R.color.systemui_panel);
+                break;
+        }
+        mView.setBackgroundColor(systemuiColor);
         OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener();
         mView.addOnAttachStateChangeListener(onAttachStateChangeListener);
         if (mView.isAttachedToWindow()) {
@@ -655,7 +668,6 @@ public class NotificationPanelViewController extends PanelViewController {
 
         onFinishInflate();
     }
-
     private void onFinishInflate() {
         loadDimens();
         mKeyguardStatusBar = mView.findViewById(R.id.keyguard_header);
@@ -3837,7 +3849,7 @@ public class NotificationPanelViewController extends PanelViewController {
 
         @Override
         public void onUiModeChanged() {
-            mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+            mView.setBackgroundColor(systemuiColor);
              reInflateViews();
         }
     }
@@ -3867,7 +3879,7 @@ public class NotificationPanelViewController extends PanelViewController {
                         mBarState == StatusBarState.SHADE_LOCKED ? 0
                                 : mKeyguardStateController.calculateGoingToFullShadeDelay();
                 mQs.animateHeaderSlidingIn(delay);
-                 mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                 mView.setBackgroundColor(systemuiColor);
             } else if (oldState == StatusBarState.SHADE_LOCKED
                     && statusBarState == StatusBarState.KEYGUARD) {
                 animateKeyguardStatusBarIn(StackStateAnimator.ANIMATION_DURATION_STANDARD);
@@ -3882,10 +3894,10 @@ public class NotificationPanelViewController extends PanelViewController {
             } else {
                 mKeyguardStatusBar.setAlpha(1f);
                 mKeyguardStatusBar.setVisibility(keyguardShowing ? View.VISIBLE : View.INVISIBLE);
-                mView.setBackgroundColor(keyguardShowing ? Color.TRANSPARENT : mResources.getColor(R.color.systemui_panel));
+                mView.setBackgroundColor(keyguardShowing ? Color.TRANSPARENT : systemuiColor);
 
                 if(oldState == StatusBarState.KEYGUARD && mQsFullyExpanded ){
-                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                    mView.setBackgroundColor(systemuiColor);
                 }
                 if (keyguardShowing && oldState != mBarState) {
                     if (mQs != null) {
@@ -3989,7 +4001,7 @@ public class NotificationPanelViewController extends PanelViewController {
             }
 
             if((mQsExpanded || mQsFullyExpanded)&& keyguardShowing){
-              mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+              mView.setBackgroundColor(systemuiColor);
               if(mKeyguardStatusView != null){
                     mKeyguardStatusView.setVisibility(View.INVISIBLE);
                 }

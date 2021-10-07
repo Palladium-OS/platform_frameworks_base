@@ -6,6 +6,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import android.content.res.Resources;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.app.ActivityThread;
+
 
 /** @hide */
 public class AccentUtils {
@@ -20,11 +25,12 @@ public class AccentUtils {
                     "gradient_start"));
 
     private static ArrayList<String> systemuiResources = new ArrayList<>(
-            Arrays.asList("systemui_panel"));
+            Arrays.asList("systemui_panel",
+                          "systemui_panel_dark"));
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
-     private static final String SYSTEMUI_COLOR_PROP = "persist.sys.theme.systemuicolor";
-
+    private static final String SYSTEMUI_COLOR_PROP = "persist.sys.theme.systemuicolor";
+    private static final String SYSTEMUI_COLOR_PROP_DARK = "persist.sys.theme.systemuicolordark";
 
 
     static boolean isResourceAccent(String resName) {
@@ -40,14 +46,35 @@ public class AccentUtils {
                 return true;
         return false;
     }
-
-
+    static boolean isDark(){
+        final Context context = ActivityThread.currentApplication();
+        Resources mResources = (Resources) context.getResources();
+        int nightModeFlags =mResources.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        boolean flg;       
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                flg=true;
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                flg=false;
+                break;
+            default:
+                flg=false;
+                break;
+        }
+        Log.e(TAG,"RGB"+flg); 
+        return flg;
+    }
     public static int getNewAccentColor(int defaultColor) {
         return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
     }
-
     public static int getNewSystemUIColor(int defaultColor) {
-        return getAccentColor(defaultColor, SYSTEMUI_COLOR_PROP);
+        if(isDark()){
+            return getAccentColor(defaultColor, SYSTEMUI_COLOR_PROP_DARK);
+        }
+        else{
+            return getAccentColor(defaultColor, SYSTEMUI_COLOR_PROP);
+        }
     }
 
     private static int getAccentColor(int defaultColor, String property) {
