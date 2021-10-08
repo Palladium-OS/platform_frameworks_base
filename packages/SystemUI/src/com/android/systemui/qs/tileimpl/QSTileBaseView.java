@@ -135,10 +135,16 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         if (setQsUseNewTint) {
             mColorActive = mColorActiveAlpha;
         }
-        mColorDisabled = Utils.getDisabled(context,
-                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
-        mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
-
+        boolean useAccentBG=Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.USE_ACCENTBG, 0, UserHandle.USER_CURRENT) == 1;
+        if(useAccentBG){
+            mColorInactive=adjustAlpha(mColorActive, 0.7f);
+            mColorDisabled = Utils.getDisabled(context,mColorInactive);
+        }
+        else{
+            mColorDisabled = Utils.getDisabled(context,Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
+            mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
+        }
         setPadding(0, 0, 0, 0);
         setClipChildren(false);
         setClipToPadding(false);

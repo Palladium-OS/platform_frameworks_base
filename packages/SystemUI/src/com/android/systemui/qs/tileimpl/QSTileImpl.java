@@ -47,7 +47,6 @@ import android.text.format.DateUtils;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.SparseArray;
-
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
@@ -118,7 +117,6 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     private EnforcedAdmin mEnforcedAdmin;
     private boolean mShowingDetail;
     private int mIsFullQs;
-
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
 
     /**
@@ -531,7 +529,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                     Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT) == 1;
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
-                return Utils.getDisabled(context,
+            return Utils.getDisabled(context,
                         Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary));
             case Tile.STATE_INACTIVE:
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
