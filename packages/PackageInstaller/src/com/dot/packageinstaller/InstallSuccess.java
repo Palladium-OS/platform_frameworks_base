@@ -96,8 +96,8 @@ public class InstallSuccess extends BottomAlertActivity {
             Button mOk = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
             Button mCancel = mAlert.getButton(DialogInterface.BUTTON_NEGATIVE);
             mOk.setBackgroundResource(R.drawable.dialog_sub_background);
-            mOk.setTextColor(getColorAttrDefaultColor(this, android.R.attr.colorAccent));
-            mOk.setBackgroundTintList(ColorStateList.valueOf(getColorAttrDefaultColor(this, android.R.attr.colorAccent)));
+            mOk.setTextColor(getColorAttrDefaultColor(this, android.R.attr.textColorPrimary));
+            mOk.setBackgroundTintList(ColorStateList.valueOf(adjustAlpha(getColorAttrDefaultColor(this, android.R.attr.colorForeground), 0.1f)));
             mCancel.setBackgroundResource(R.drawable.dialog_sub_background);
             mCancel.setBackgroundTintList(ColorStateList.valueOf(adjustAlpha(getColorAttrDefaultColor(this, android.R.attr.colorForeground), 0.1f)));
             mCancel.setTextColor(getColorAttrDefaultColor(this, android.R.attr.textColorPrimary));
