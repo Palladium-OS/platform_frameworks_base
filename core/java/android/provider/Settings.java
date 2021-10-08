@@ -6259,6 +6259,12 @@ public final class Settings {
          */
         public static final String HEADSUP_USE_TRANSPARENT_BACKGROUND = "headsup_use_transparent_background";
 
+        /**
+         * Number Of icons in QQS
+         * @hide
+         */
+        public static final String QQS_ICONS = "qqs_count";
+
 	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.

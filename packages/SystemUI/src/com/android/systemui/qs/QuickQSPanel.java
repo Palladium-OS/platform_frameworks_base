@@ -25,7 +25,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-
+import android.os.UserHandle;
+import android.provider.Settings;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
@@ -55,8 +56,7 @@ public class QuickQSPanel extends QSPanel {
     public static final String NUM_QUICK_TILES = "sysui_qqs_count";
     private static final String TAG = "QuickQSPanel";
     // Start it at 6 so a non-zero value can be obtained statically.
-    private static int sDefaultMaxTiles = 6;
-
+    private static int sDefaultMaxTiles; 
     private boolean mDisabledByPolicy;
     private int mMaxTiles;
     protected QSPanel mFullPanel;
@@ -73,7 +73,7 @@ public class QuickQSPanel extends QSPanel {
             UiEventLogger uiEventLogger
     ) {
         super(context, attrs, dumpManager, broadcastDispatcher, qsLogger, mediaHost, uiEventLogger);
-        sDefaultMaxTiles = getResources().getInteger(R.integer.quick_qs_panel_max_columns);
+        sDefaultMaxTiles = Settings.System.getIntForUser(context.getContentResolver(),Settings.System.QQS_ICONS,6,UserHandle.USER_CURRENT);
         applyBottomMargin((View) mRegularTileLayout);
     }
 
@@ -218,7 +218,7 @@ public class QuickQSPanel extends QSPanel {
     private final Tunable mNumTiles = new Tunable() {
         @Override
         public void onTuningChanged(String key, String newValue) {
-            setMaxTiles(parseNumTiles(newValue));
+            setMaxTiles(sDefaultMaxTiles);
         }
     };
 
