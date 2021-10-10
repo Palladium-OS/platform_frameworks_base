@@ -18,14 +18,14 @@
   -->
 <resources>
     <!-- The color of the material notification background -->
-    <color name="notification_material_background_color">@color/notification_new</color>
+    <color name="notification_material_background_color">@color/notification_new_dark</color>
 
     <!-- The color of the legacy notifications with customs backgrounds (gingerbread and lollipop.)
     It's fine to override this color since at that point the shade was dark. -->
     <color name="notification_legacy_background_color">@*android:color/notification_material_background_color</color>
 
     <!-- The color of the material notification background when dimmed -->
-    <color name="notification_material_background_dimmed_color">@color/notification_new</color>
+    <color name="notification_material_background_dimmed_color">@color/notification_new_dark</color>
 
     <!-- The color of the dividing line between grouped notifications while . -->
     <color name="notification_divider_color">#212121</color>
@@ -112,6 +112,6 @@
     <color name="systemui_panel_dark">#FF353333</color>
     <color name="header_date">#ffffff</color>
     <color name="qs_tile_new">#403E3F</color>
-    <color name="notification_new">#FF1A1A1A</color>
+    <color name="notification_new_dark">#FF1A1A1A</color>
 
 </resources>

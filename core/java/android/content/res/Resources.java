@@ -1066,6 +1066,8 @@ public class Resources {
                             value.data = AccentUtils.getNewAccentColor(value.data);
                         if (AccentUtils.isResourceSystemUI(resName))
                             value.data = AccentUtils.getNewSystemUIColor(value.data);
+                        if (AccentUtils.isResourceNotif(resName))
+                            value.data = AccentUtils.getNewNotifColor(value.data);
                     } catch (NotFoundException ignored) {
                     } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage());

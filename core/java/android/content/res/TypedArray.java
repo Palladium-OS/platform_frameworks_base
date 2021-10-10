@@ -523,6 +523,8 @@ public class TypedArray {
                     newColor = AccentUtils.getNewAccentColor(defValue);
                 if (AccentUtils.isResourceSystemUI(resName))
                     newColor = AccentUtils.getNewSystemUIColor(defValue);
+                if (AccentUtils.isResourceNotif(resName))
+                    newColor = AccentUtils.getNewNotifColor(defValue);
                 if (newColor != defValue)
                     return newColor;
             }

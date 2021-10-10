@@ -28,15 +28,29 @@ public class AccentUtils {
             Arrays.asList("systemui_panel",
                           "systemui_panel_dark"));
 
+    private static ArrayList<String> notifResources = new ArrayList<>(
+            Arrays.asList("notification_new",
+                            "notification_new_dark"));
+
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
     private static final String ACCENT_COLOR_PROP_DARK = "persist.sys.theme.accentcolordark";
     private static final String SYSTEMUI_COLOR_PROP = "persist.sys.theme.systemuicolor";
     private static final String SYSTEMUI_COLOR_PROP_DARK = "persist.sys.theme.systemuicolordark";
+    private static final String NOTIF_COLOR_PROP = "persist.sys.theme.notifcolor";
+    private static final String NOTIF_COLOR_PROP_DARK = "persist.sys.theme.notifcolordark";
+    
 
 
     static boolean isResourceAccent(String resName) {
         for (String ar : accentResources)
             if (resName.contains(ar))
+                return true;
+        return false;
+    }
+
+    static boolean isResourceNotif(String resName) {
+        for (String su : notifResources)
+            if (resName.contains(su))
                 return true;
         return false;
     }
@@ -82,6 +96,16 @@ public class AccentUtils {
             return getAccentColor(defaultColor, SYSTEMUI_COLOR_PROP);
         }
     }
+
+    public static int getNewNotifColor(int defaultColor) {
+        if(isDark()){
+            return getAccentColor(defaultColor, NOTIF_COLOR_PROP_DARK);
+        }
+        else{
+            return getAccentColor(defaultColor, NOTIF_COLOR_PROP);
+        }
+    }
+
 
     private static int getAccentColor(int defaultColor, String property) {
         try {
