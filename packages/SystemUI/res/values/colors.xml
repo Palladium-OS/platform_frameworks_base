@@ -79,10 +79,10 @@
     <color name="notification_legacy_background_color">#ff1a1a1a</color>
 
     <!-- The color of the material notification background -->
-    <color name="notification_material_background_color">@*android:color/notification_material_background_color</color>
+    <color name="notification_material_background_color">@color/notification_new</color>
 
     <!-- The color of the material notification background when dimmed -->
-    <color name="notification_material_background_dimmed_color">#ccffffff</color>
+    <color name="notification_material_background_dimmed_color">@color/notification_new</color>
 
     <!-- The color of the material notification background when dark -->
     <color name="notification_material_background_dark_color">#ff333333</color>
@@ -274,7 +274,7 @@
     <color name="screenrecord_status_color">#E94235</color>
 
     <!-- New SystemUI -->
-    <color name="systemui_panel">#F5CDCDC5</color>
+    <color name="systemui_panel">#FFC6C7BD</color>
     <color name="header_date">#B3000000</color>
     <color name="qs_tile_new">#BCBBAF</color>
     <color name="notification_new">#FFE0E0D8</color>
