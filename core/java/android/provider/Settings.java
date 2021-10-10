@@ -6271,6 +6271,12 @@ public final class Settings {
          */
         public static final String SB_BG_ALPHA = "sb_bg_alpha";
 
+        /**
+         * Whether to make corners rounded
+         * @hide
+         */
+        public static final String MAKE_RND = "make_round";
+
 	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -6449,6 +6455,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AICP_LOCKSCREEN_WEATHER_STYLE);
             PRIVATE_SETTINGS.add(USE_ACCENTBG);
             PRIVATE_SETTINGS.add(HEADSUP_USE_TRANSPARENT_BACKGROUND);
+            PRIVATE_SETTINGS.add(MAKE_RND);
         }
 
         /**

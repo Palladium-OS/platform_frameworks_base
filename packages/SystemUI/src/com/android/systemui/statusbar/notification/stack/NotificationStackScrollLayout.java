@@ -758,8 +758,15 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
 
     @Override
     public void onOverlayChanged() {
-        int newRadius = mContext.getResources().getDimensionPixelSize(
+        int newRadius;
+        boolean useroundC=Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.MAKE_RND, 0, UserHandle.USER_CURRENT) == 1;
+        if(useroundC){
+            newRadius = mContext.getResources().getDimensionPixelSize(R.dimen.notificationstack_radius);
+        }
+        else{
+            newRadius = mContext.getResources().getDimensionPixelSize(
                 Utils.getThemeAttr(mContext, android.R.attr.dialogCornerRadius));
+        }
         if (mCornerRadius != newRadius) {
             mCornerRadius = newRadius;
             invalidate();
@@ -1106,8 +1113,14 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         mSidePaddings = res.getDimensionPixelSize(R.dimen.notification_side_paddings);
         mMinInteractionHeight = res.getDimensionPixelSize(
                 R.dimen.notification_min_interaction_height);
-        mCornerRadius = res.getDimensionPixelSize(
-                Utils.getThemeAttr(mContext, android.R.attr.dialogCornerRadius));
+        if(Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.MAKE_RND, 0, UserHandle.USER_CURRENT) == 1){
+                     mCornerRadius = res.getDimensionPixelSize(R.dimen.notificationstack_radius);
+                }
+                else{
+            mCornerRadius = res.getDimensionPixelSize(
+                    Utils.getThemeAttr(mContext, android.R.attr.dialogCornerRadius));
+                }
         mHeadsUpInset = mStatusBarHeight + res.getDimensionPixelSize(
                 R.dimen.heads_up_status_bar_padding);
     }

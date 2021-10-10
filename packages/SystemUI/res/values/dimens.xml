@@ -1424,4 +1424,6 @@
     <dimen name="media_output_dialog_header_icon_padding">16dp</dimen>
     <dimen name="media_output_dialog_icon_corner_radius">16dp</dimen>
     <dimen name="media_output_dialog_title_anim_y_delta">12.5dp</dimen>
+
+    <dimen name="notificationstack_radius">20dp</dimen>
 </resources>

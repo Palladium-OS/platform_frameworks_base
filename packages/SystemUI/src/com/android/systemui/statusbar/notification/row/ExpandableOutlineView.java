@@ -26,6 +26,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.provider.Settings;
+import android.os.UserHandle;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
@@ -234,13 +236,25 @@ public abstract class ExpandableOutlineView extends ExpandableView {
 
     private void initDimens() {
         Resources res = getResources();
+        boolean useroundC=Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.MAKE_RND, 0, UserHandle.USER_CURRENT) == 1;
         mShouldTranslateContents =
                 res.getBoolean(R.bool.config_translateNotificationContentsOnSwipe);
-        mOutlineRadius = res.getDimension(R.dimen.notification_shadow_radius);
+        if(useroundC){
+            mOutlineRadius = res.getDimensionPixelSize(R.dimen.notificationstack_radius);
+        }
+        else{
+            mOutlineRadius = res.getDimension(R.dimen.notification_shadow_radius);
+        }
         mAlwaysRoundBothCorners = res.getBoolean(R.bool.config_clipNotificationsToOutline);
         if (!mAlwaysRoundBothCorners) {
-            mOutlineRadius = res.getDimensionPixelSize(
+            if(useroundC){
+                mOutlineRadius = res.getDimensionPixelSize(R.dimen.notificationstack_radius);
+            }
+            else{
+                mOutlineRadius = res.getDimensionPixelSize(
                     Utils.getThemeAttr(mContext, android.R.attr.dialogCornerRadius));
+            }
         }
         setClipToOutline(mAlwaysRoundBothCorners);
     }

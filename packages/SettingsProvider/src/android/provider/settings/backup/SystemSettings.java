@@ -94,5 +94,6 @@ public class SystemSettings {
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.USE_ACCENTBG,
         Settings.System.HEADSUP_USE_TRANSPARENT_BACKGROUND,
+         Settings.System.MAKE_RND,
     };
 }
