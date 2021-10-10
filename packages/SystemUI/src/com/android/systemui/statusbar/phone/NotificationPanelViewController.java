@@ -2187,7 +2187,7 @@ public class NotificationPanelViewController extends PanelViewController {
             mStatusBar.setPanelExpanded(isExpanded);
             mPanelExpanded = isExpanded;
             if(!keyguardShowing){
-                mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                mView.setBackgroundColor(systemuiColor);
                 if ( mSBBGAlpha < 255) {
                     mView.getBackground().setAlpha(mSBBGAlpha);
                 }
@@ -3791,7 +3791,7 @@ public class NotificationPanelViewController extends PanelViewController {
                      mView.setBackgroundColor(Color.TRANSPARENT);
                 }
                 else{
-                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                    mView.setBackgroundColor(systemuiColor);
                 }
             } else {
                 setHeadsUpAnimatingAway(true);
@@ -3801,7 +3801,7 @@ public class NotificationPanelViewController extends PanelViewController {
                      mView.setBackgroundColor(Color.TRANSPARENT);
                 }
                 else{
-                    mView.setBackgroundColor(mResources.getColor(R.color.systemui_panel));
+                    mView.setBackgroundColor(systemuiColor);
                     if ( mSBBGAlpha < 255) {
                         mView.getBackground().setAlpha(mSBBGAlpha);
                      }
