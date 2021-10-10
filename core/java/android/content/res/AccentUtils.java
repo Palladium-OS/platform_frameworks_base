@@ -29,6 +29,7 @@ public class AccentUtils {
                           "systemui_panel_dark"));
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
+    private static final String ACCENT_COLOR_PROP_DARK = "persist.sys.theme.accentcolordark";
     private static final String SYSTEMUI_COLOR_PROP = "persist.sys.theme.systemuicolor";
     private static final String SYSTEMUI_COLOR_PROP_DARK = "persist.sys.theme.systemuicolordark";
 
@@ -66,7 +67,12 @@ public class AccentUtils {
         return flg;
     }
     public static int getNewAccentColor(int defaultColor) {
-        return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
+        if(isDark()){
+             return getAccentColor(defaultColor, ACCENT_COLOR_PROP_DARK);
+        }
+        else{
+             return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
+        }
     }
     public static int getNewSystemUIColor(int defaultColor) {
         if(isDark()){
