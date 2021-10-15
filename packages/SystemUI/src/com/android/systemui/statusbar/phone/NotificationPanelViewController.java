@@ -849,6 +849,19 @@ public class NotificationPanelViewController extends PanelViewController {
         if (mOnReinflationListener != null) {
             mOnReinflationListener.run();
         }
+        int nightModeFlags =mResources.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                systemuiColor=mResources.getColor(R.color.systemui_panel_dark);
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                systemuiColor=mResources.getColor(R.color.systemui_panel);
+                break;
+            default:
+                systemuiColor=mResources.getColor(R.color.systemui_panel);
+                break;
+        }
+        mView.setBackgroundColor(systemuiColor);
     }
 
     private void initBottomArea() {
