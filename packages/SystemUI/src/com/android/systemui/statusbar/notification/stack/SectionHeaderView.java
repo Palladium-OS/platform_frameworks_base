@@ -130,7 +130,7 @@ public class SectionHeaderView extends StackScrollerDecorView {
     }
 
     void setForegroundColor(@ColorInt int color) {
-        int nc= mContext.getResources().getDimensionPixelSize(R.color.header_date);
+        int nc= mContext.getResources().getColor(R.color.header_date);
         mLabelView.setTextColor(nc);
         mClearAllButton.setImageTintList(ColorStateList.valueOf(color));
     }
