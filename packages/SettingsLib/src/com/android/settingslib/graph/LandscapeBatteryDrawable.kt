@@ -29,6 +29,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.PathParser
 import android.util.TypedValue
+import android.util.Log
 
 import com.android.settingslib.R
 import com.android.settingslib.Utils
@@ -256,12 +257,7 @@ open class LandscapeBatteryDrawable(private val context: Context, frameColor: In
                 c.drawPath(scaledBolt, fillColorStrokeProtection)
             }
         } else if (powerSaveEnabled) {
-            // If power save is enabled draw the perimeter path with colorError
-            c.drawPath(scaledErrorPerimeter, errorPaint)
-            // And draw the plus sign on top of the fill
-            if (!showPercent) {
-                c.drawPath(scaledPlus, errorPaint)
-            }
+            c.drawPath(scaledPlus, errorPaint)
         }
         c.restore()
 

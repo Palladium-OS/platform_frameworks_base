@@ -257,12 +257,7 @@ open class RLandscapeBatteryDrawable(private val context: Context, frameColor: I
                 c.drawPath(scaledBolt, fillColorStrokeProtection)
             }
         } else if (powerSaveEnabled) {
-            // If power save is enabled draw the perimeter path with colorError
-            c.drawPath(scaledErrorPerimeter, errorPaint)
-            // And draw the plus sign on top of the fill
-            if (!showPercent) {
-                c.drawPath(scaledPlus, errorPaint)
-            }
+             c.drawPath(scaledPlus, errorPaint)
         }
         c.restore()
 
