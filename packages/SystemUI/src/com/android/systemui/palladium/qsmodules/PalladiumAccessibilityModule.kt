@@ -19,6 +19,7 @@ package com.android.systemui.palladium.qsmodules
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.SyncTile
+import com.android.systemui.qs.tiles.SoundTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -38,4 +39,10 @@ interface PalladiumAccessibilityModule {
     @IntoMap
     @StringKey(SyncTile.TILE_SPEC)
     fun bindSyncTile(syncTile: SyncTile): QSTileImpl<*>     
+
+    /** Inject SoundTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(SoundTile.TILE_SPEC)
+    fun bindSoundTile(soundTile: SoundTile): QSTileImpl<*>    
 }
