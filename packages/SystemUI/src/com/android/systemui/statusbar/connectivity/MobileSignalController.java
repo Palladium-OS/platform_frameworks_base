@@ -109,35 +109,34 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     private boolean mRoamingIconAllowed;
 
-    private final MobileStatusTracker.Callback mMobileCallback =
-            new MobileStatusTracker.Callback() {
-                private String mLastStatus;
+    private final MobileStatusTracker.Callback mMobileCallback = new MobileStatusTracker.Callback() {
+        private String mLastStatus;
 
-                @Override
-                public void onMobileStatusChanged(boolean updateTelephony,
-                        MobileStatus mobileStatus) {
-                    if (Log.isLoggable(mTag, Log.DEBUG)) {
-                        Log.d(mTag, "onMobileStatusChanged="
-                                + " updateTelephony=" + updateTelephony
-                                + " mobileStatus=" + mobileStatus.toString());
-                    }
-                    String currentStatus = mobileStatus.toString();
-                    if (!currentStatus.equals(mLastStatus)) {
-                        mLastStatus = currentStatus;
-                        String status = new StringBuilder()
-                                .append(SSDF.format(System.currentTimeMillis())).append(",")
-                                .append(currentStatus)
-                                .toString();
-                        recordLastMobileStatus(status);
-                    }
-                    updateMobileStatus(mobileStatus);
-                    if (updateTelephony) {
-                        updateTelephony();
-                    } else {
-                        notifyListenersIfNecessary();
-                    }
-                }
-            };
+        @Override
+        public void onMobileStatusChanged(boolean updateTelephony,
+                MobileStatus mobileStatus) {
+            if (Log.isLoggable(mTag, Log.DEBUG)) {
+                Log.d(mTag, "onMobileStatusChanged="
+                        + " updateTelephony=" + updateTelephony
+                        + " mobileStatus=" + mobileStatus.toString());
+            }
+            String currentStatus = mobileStatus.toString();
+            if (!currentStatus.equals(mLastStatus)) {
+                mLastStatus = currentStatus;
+                String status = new StringBuilder()
+                        .append(SSDF.format(System.currentTimeMillis())).append(",")
+                        .append(currentStatus)
+                        .toString();
+                recordLastMobileStatus(status);
+            }
+            updateMobileStatus(mobileStatus);
+            if (updateTelephony) {
+                updateTelephony();
+            } else {
+                notifyListenersIfNecessary();
+            }
+        }
+    };
 
     private final RegistrationCallback mRegistrationCallback = new RegistrationCallback() {
         @Override
@@ -160,8 +159,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                             getCallStrengthIcon(mLastWlanLevel, /* isWifi= */true),
                             getCallStrengthDescription(mLastWlanLevel, /* isWifi= */true));
                     notifyCallStateChange(statusIcon, mSubscriptionInfo.getSubscriptionId());
-                } else if (registrationAttributes
-                        == ImsRegistrationAttributes.ATTR_EPDG_OVER_CELL_INTERNET) {
+                } else if (registrationAttributes == ImsRegistrationAttributes.ATTR_EPDG_OVER_CELL_INTERNET) {
                     mImsType = IMS_TYPE_WLAN_CROSS_SIM;
                     IconState statusIcon = new IconState(
                             true,
@@ -187,7 +185,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     private boolean mDataDisabledIcon;
 
-    // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
+    // TODO: Reduce number of vars passed in, if we have the NetworkController,
+    // probably don't
     // need listener lists anymore.
     public MobileSignalController(
             Context context,
@@ -200,8 +199,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             SubscriptionDefaults defaults,
             Looper receiverLooper,
             CarrierConfigTracker carrierConfigTracker,
-            FeatureFlags featureFlags
-    ) {
+            FeatureFlags featureFlags) {
         super("MobileSignalController(" + info.getSubscriptionId() + ")", context,
                 NetworkCapabilities.TRANSPORT_CELLULAR, callbackHandler,
                 networkController);
@@ -237,7 +235,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mProviderModelBehavior = featureFlags.isCombinedStatusBarSignalIconsEnabled();
         mProviderModelSetting = featureFlags.isProviderModelSettingEnabled();
 
-	Handler mHandler = new Handler();
+        Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
     }
@@ -246,6 +244,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         SettingsObserver(Handler handler) {
             super(handler);
         }
+
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
@@ -261,7 +260,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         }
 
         /*
-         *  @hide
+         * @hide
          */
         @Override
         public void onChange(boolean selfChange) {
@@ -329,7 +328,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         }
     }
 
-    // There is no listener to monitor whether the IMS service is ready, so we have to retry the
+    // There is no listener to monitor whether the IMS service is ready, so we have
+    // to retry the
     // IMS registration.
     private final Runnable mTryRegisterIms = new Runnable() {
         private static final int MAX_RETRY = 12;
@@ -384,8 +384,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             }
             boolean dataDisabled = mCurrentState.userSetup
                     && (mCurrentState.iconGroup == TelephonyIcons.DATA_DISABLED
-                    || (mCurrentState.iconGroup == TelephonyIcons.NOT_DEFAULT_DATA
-                            && mCurrentState.defaultDataOff));
+                            || (mCurrentState.iconGroup == TelephonyIcons.NOT_DEFAULT_DATA
+                                    && mCurrentState.defaultDataOff));
             boolean noInternet = mCurrentState.inetCondition == 0;
             boolean cutOut = dataDisabled || noInternet;
             return SignalDrawable.getState(level, getNumLevels(), cutOut);
@@ -403,7 +403,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     @Override
     public void notifyListeners(SignalCallback callback) {
-        // If the device is on carrier merged WiFi, we should let WifiSignalController to control
+        // If the device is on carrier merged WiFi, we should let WifiSignalController
+        // to control
         // the SysUI states.
         if (mNetworkController.isCarrierMergedWifi(mSubscriptionInfo.getSubscriptionId())) {
             return;
@@ -413,8 +414,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         String contentDescription = getTextIfExists(getContentDescription()).toString();
         CharSequence dataContentDescriptionHtml = getTextIfExists(icons.dataContentDescription);
 
-        //TODO: Hacky
-        // The data content description can sometimes be shown in a text view and might come to us
+        // TODO: Hacky
+        // The data content description can sometimes be shown in a text view and might
+        // come to us
         // as HTML. Strip any styling here so that listeners don't have to care
         CharSequence dataContentDescription = Html.fromHtml(
                 dataContentDescriptionHtml.toString(), 0).toString();
@@ -437,7 +439,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 qsInfo.description,
                 mSubscriptionInfo.getSubscriptionId(),
                 mCurrentState.roaming,
-                sbInfo.showTriangle);
+                sbInfo.showTriangle,
+                mCurrentState.isDefault);
         callback.setMobileDataIndicators(mobileDataIndicators);
     }
 
@@ -448,7 +451,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
         boolean pm = mProviderModelSetting || mProviderModelBehavior;
         if (mCurrentState.dataSim) {
-            // If using provider model behavior, only show QS icons if the state is also default
+            // If using provider model behavior, only show QS icons if the state is also
+            // default
             if (pm && !mCurrentState.isDefault) {
                 return new QsInfo(qsTypeIcon, qsIcon, qsDescription);
             }
@@ -477,8 +481,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         if (mProviderModelBehavior) {
             boolean showDataIconStatusBar = (mCurrentState.dataConnected || dataDisabled)
                     && (mCurrentState.dataSim && mCurrentState.isDefault);
-            typeIcon =
-                    (showDataIconStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
+            typeIcon = (showDataIconStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
             showDataIconStatusBar |= mCurrentState.roaming;
             statusIcon = new IconState(
                     showDataIconStatusBar && !mCurrentState.airplaneMode,
@@ -490,10 +493,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     mCurrentState.enabled && !mCurrentState.airplaneMode,
                     getCurrentIconId(), contentDescription);
 
-            boolean showDataIconInStatusBar =
-                    (mCurrentState.dataConnected && mCurrentState.isDefault) || dataDisabled;
-            typeIcon =
-                    (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
+            boolean showDataIconInStatusBar = (mCurrentState.dataConnected && mCurrentState.isDefault) || dataDisabled;
+            typeIcon = (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
             showTriangle = mCurrentState.enabled && !mCurrentState.airplaneMode;
         }
 
@@ -519,8 +520,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             return false;
         }
         if (mCurrentState.isCdma()) {
-            return mPhone.getCdmaEnhancedRoamingIndicatorDisplayNumber()
-                    != TelephonyManager.ERI_OFF;
+            return mPhone.getCdmaEnhancedRoamingIndicatorDisplayNumber() != TelephonyManager.ERI_OFF;
         } else {
             return mCurrentState.isRoaming();
         }
@@ -552,9 +552,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         } else {
             // There doesn't seem to be a data sim selected, however if
             // there isn't a MobileSignalController with dataSim set, then
-            // QS won't get any callbacks and will be blank.  Instead
+            // QS won't get any callbacks and will be blank. Instead
             // lets just assume we are the data sim (which will basically
-            // show one at random) in QS until one is selected.  The user
+            // show one at random) in QS until one is selected. The user
             // should pick one soon after, so we shouldn't be in this state
             // for long.
             mCurrentState.dataSim = true;
@@ -602,11 +602,12 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     /**
-     * Extracts the CellSignalStrengthCdma from SignalStrength then returns the level
+     * Extracts the CellSignalStrengthCdma from SignalStrength then returns the
+     * level
      */
     private int getCdmaLevel(SignalStrength signalStrength) {
-        List<CellSignalStrengthCdma> signalStrengthCdma =
-                signalStrength.getCellSignalStrengths(CellSignalStrengthCdma.class);
+        List<CellSignalStrengthCdma> signalStrengthCdma = signalStrength
+                .getCellSignalStrengths(CellSignalStrengthCdma.class);
         if (!signalStrengthCdma.isEmpty()) {
             return signalStrengthCdma.get(0).getLevel();
         }
@@ -623,7 +624,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         }
     }
 
-    /** Call state changed is only applicable when provider model behavior is true */
+    /**
+     * Call state changed is only applicable when provider model behavior is true
+     */
     private void maybeNotifyCallStateChanged(int lastVoiceState) {
         int currentVoiceState = mCurrentState.getVoiceServiceState();
         if (lastVoiceState == currentVoiceState) {
@@ -632,7 +635,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         // Only update the no calling Status in the below scenarios
         // 1. The first valid voice state has been received
         // 2. The voice state has been changed and either the last or current state is
-        //    ServiceState.STATE_IN_SERVICE
+        // ServiceState.STATE_IN_SERVICE
         if (lastVoiceState == -1
                 || (lastVoiceState == ServiceState.STATE_IN_SERVICE
                         || currentVoiceState == ServiceState.STATE_IN_SERVICE)) {
@@ -767,7 +770,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     /**
      * Updates the current state based on ServiceState, SignalStrength, DataState,
-     * TelephonyDisplayInfo, and sim state.  It should be called any time one of these is updated.
+     * TelephonyDisplayInfo, and sim state. It should be called any time one of
+     * these is updated.
      * This will call listeners if necessary.
      */
     private void updateTelephony() {
@@ -794,7 +798,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled() && mDataDisabledIcon/*!mConfig.alwaysShowDataRatIcon*/) {
+        } else if (isDataDisabled() && mDataDisabledIcon/* !mConfig.alwaysShowDataRatIcon */) {
             if (mSubscriptionInfo.getSubscriptionId() != mDefaults.getDefaultDataSubId()) {
                 mCurrentState.iconGroup = TelephonyIcons.NOT_DEFAULT_DATA;
             } else {
@@ -821,7 +825,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     /**
-     * If we are controlling the NOT_DEFAULT_DATA icon, check the status of the other one
+     * If we are controlling the NOT_DEFAULT_DATA icon, check the status of the
+     * other one
      */
     private void checkDefaultData() {
         if (mCurrentState.iconGroup != TelephonyIcons.NOT_DEFAULT_DATA) {
@@ -877,8 +882,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             }
         }
         // Print out the previous states in ordered number.
-        for (int i = mMobileStatusHistoryIndex + STATUS_HISTORY_SIZE - 1;
-                i >= mMobileStatusHistoryIndex + STATUS_HISTORY_SIZE - size; i--) {
+        for (int i = mMobileStatusHistoryIndex + STATUS_HISTORY_SIZE - 1; i >= mMobileStatusHistoryIndex
+                + STATUS_HISTORY_SIZE - size; i--) {
             pw.println("  Previous MobileStatus("
                     + (mMobileStatusHistoryIndex + STATUS_HISTORY_SIZE - i) + "): "
                     + mMobileStatusHistory[i & (STATUS_HISTORY_SIZE - 1)]);
