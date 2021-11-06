@@ -142,7 +142,6 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
             super(handler);
         }
 
-
         void observe() {
             ContentResolver resolver = getContext().getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -150,6 +149,9 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SHOW_BATTERY_ESTIMATE),
                     false, this, UserHandle.USER_ALL);
         }
 
