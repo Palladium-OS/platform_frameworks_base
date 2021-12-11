@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.ArrayMap;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -449,7 +450,9 @@ public class QSPanel extends LinearLayout implements Tunable {
                     QS_BRIGHTNESS_POSITION_BOTTOM, 0) == 1;
             if (!mUsingHorizontalLayout) {
                 switchToParent(mBrightnessView, parent, bottom ? index : 0);
-                index++;
+                boolean mediaInQS = Settings.Global.getInt(mContext.getContentResolver(),
+                        Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, 1) == 1;
+                if (mediaInQS) index++;
             } else {
                 onTuningChanged(QS_BRIGHTNESS_POSITION_BOTTOM, bottom ? "1" : "0");
             }
@@ -772,6 +775,7 @@ public class QSPanel extends LinearLayout implements Tunable {
                 mTileLayout.setMaxColumns(horizontal ? 2 : 4);
             }
             updateMargins(mediaHostView);
+            if (mHorizontalLinearLayout == null) return;
             mHorizontalLinearLayout.setVisibility(horizontal ? View.VISIBLE : View.GONE);
         }
     }
