@@ -52,19 +52,15 @@ public class SystemSettingsValidators {
                                 || (val == BatteryManager.BATTERY_PLUGGED_AC)
                                 || (val == BatteryManager.BATTERY_PLUGGED_USB)
                                 || (val == BatteryManager.BATTERY_PLUGGED_WIRELESS)
-                                || (val
-                                        == (BatteryManager.BATTERY_PLUGGED_AC
-                                                | BatteryManager.BATTERY_PLUGGED_USB))
-                                || (val
-                                        == (BatteryManager.BATTERY_PLUGGED_AC
-                                                | BatteryManager.BATTERY_PLUGGED_WIRELESS))
-                                || (val
-                                        == (BatteryManager.BATTERY_PLUGGED_USB
-                                                | BatteryManager.BATTERY_PLUGGED_WIRELESS))
-                                || (val
-                                        == (BatteryManager.BATTERY_PLUGGED_AC
-                                                | BatteryManager.BATTERY_PLUGGED_USB
-                                                | BatteryManager.BATTERY_PLUGGED_WIRELESS));
+                                || (val == (BatteryManager.BATTERY_PLUGGED_AC
+                                        | BatteryManager.BATTERY_PLUGGED_USB))
+                                || (val == (BatteryManager.BATTERY_PLUGGED_AC
+                                        | BatteryManager.BATTERY_PLUGGED_WIRELESS))
+                                || (val == (BatteryManager.BATTERY_PLUGGED_USB
+                                        | BatteryManager.BATTERY_PLUGGED_WIRELESS))
+                                || (val == (BatteryManager.BATTERY_PLUGGED_AC
+                                        | BatteryManager.BATTERY_PLUGGED_USB
+                                        | BatteryManager.BATTERY_PLUGGED_WIRELESS));
                     } catch (NumberFormatException e) {
                         return false;
                     }
@@ -96,14 +92,10 @@ public class SystemSettingsValidators {
                         // color mode further down in ColorDisplayManager / ColorDisplayService.
                         try {
                             final int setting = Integer.parseInt(value);
-                            final boolean isInFrameworkRange =
-                                    setting >= ColorDisplayManager.COLOR_MODE_NATURAL
-                                            && setting <= ColorDisplayManager.COLOR_MODE_AUTOMATIC;
-                            final boolean isInVendorRange =
-                                    setting >= ColorDisplayManager.VENDOR_COLOR_MODE_RANGE_MIN
-                                            && setting
-                                                    <= ColorDisplayManager
-                                                            .VENDOR_COLOR_MODE_RANGE_MAX;
+                            final boolean isInFrameworkRange = setting >= ColorDisplayManager.COLOR_MODE_NATURAL
+                                    && setting <= ColorDisplayManager.COLOR_MODE_AUTOMATIC;
+                            final boolean isInVendorRange = setting >= ColorDisplayManager.VENDOR_COLOR_MODE_RANGE_MIN
+                                    && setting <= ColorDisplayManager.VENDOR_COLOR_MODE_RANGE_MAX;
                             return isInFrameworkRange || isInVendorRange;
                         } catch (NumberFormatException | NullPointerException e) {
                             return false;
@@ -145,7 +137,7 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(
-                System.TIME_12_24, new DiscreteValueValidator(new String[] {"12", "24", null}));
+                System.TIME_12_24, new DiscreteValueValidator(new String[] { "12", "24", null }));
         VALIDATORS.put(System.SETUP_WIZARD_HAS_RUN, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.ACCELEROMETER_ROTATION, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.USER_ROTATION, new InclusiveIntegerRangeValidator(0, 3));
@@ -178,7 +170,7 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.SIP_RECEIVE_CALLS, BOOLEAN_VALIDATOR);
         VALIDATORS.put(
                 System.SIP_CALL_OPTIONS,
-                new DiscreteValueValidator(new String[] {"SIP_ALWAYS", "SIP_ADDRESS_ONLY"}));
+                new DiscreteValueValidator(new String[] { "SIP_ALWAYS", "SIP_ADDRESS_ONLY" }));
         VALIDATORS.put(System.SIP_ALWAYS, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.SIP_ADDRESS_ONLY, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.SIP_ASK_ME_EACH_TIME, BOOLEAN_VALIDATOR);
@@ -209,7 +201,8 @@ public class SystemSettingsValidators {
                     @Override
                     public boolean validate(String value) {
                         String[] args = value.split(",", 0);
-                        if (args.length != 3) return false;
+                        if (args.length != 3)
+                            return false;
                         try {
                             for (String str : args)
                                 if (Integer.parseInt(str) < 0)
@@ -234,5 +227,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.NOTIFICATION_PULSE_DURATION, ANY_INTEGER_VALIDATOR);
         VALIDATORS.put(System.KEYGAURD_MEDIA_ART, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.LOCKSCREEN_BATTERY_INFO, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.LOCKSCREEN_SMALL_CLOCK, BOOLEAN_VALIDATOR);
     }
 }

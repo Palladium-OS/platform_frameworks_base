@@ -6178,6 +6178,14 @@ public final class Settings {
                 public static final String DOZE_TRIGGER_DOUBLETAP = "doze_trigger_doubletap";
 
                 /**
+                 * Whether to force small clock on keyguard
+                 * 
+                 * @hide
+                 */
+                @Readable
+                public static final String LOCKSCREEN_SMALL_CLOCK = "lockscreen_small_clock";
+
+                /**
                  * These are all public system settings
                  *
                  * @hide
