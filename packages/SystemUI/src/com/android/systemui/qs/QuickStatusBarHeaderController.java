@@ -103,7 +103,7 @@ class QuickStatusBarHeaderController extends ViewController<QuickStatusBarHeader
         mDemoModeReceiver = new ClockDemoModeReceiver(mClockView);
 
         // Don't need to worry about tuner settings for this icon
-        mBatteryMeterViewController.ignoreTunerUpdates();
+        // mBatteryMeterViewController.ignoreTunerUpdates();
     }
 
     @Override
