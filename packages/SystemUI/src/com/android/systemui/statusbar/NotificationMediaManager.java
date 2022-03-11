@@ -164,7 +164,7 @@ public class NotificationMediaManager implements Dumpable {
                 if (!isPlaybackActive(state.getState())) {
                     clearCurrentMediaNotification();
                 }
-                StatusBar statusBar =  mStatusBarOptionalLazy.get();
+                StatusBar statusBar =  mStatusBarOptionalLazy.get().get();
                 if (statusBar != null) {
                     statusBar.getVisualizer().setPlaying(state.getState()
                             == PlaybackState.STATE_PLAYING);
@@ -711,7 +711,7 @@ public class NotificationMediaManager implements Dumpable {
             mScrimController.setHasBackdrop(hasArtwork);
         }
 
-        StatusBar statusBar =  mStatusBarOptionalLazy.get();
+        StatusBar statusBar =  mStatusBarOptionalLazy.get().get();
         if (statusBar != null &&
                 mStatusBarStateController.getState() != StatusBarState.SHADE) {
             VisualizerView visualizerView = statusBar.getVisualizer();
