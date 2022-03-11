@@ -127,12 +127,14 @@ public class FeatureFlags {
         return isEnabled(Flags.SMARTSPACE_SHARED_ELEMENT_TRANSITION_ENABLED);
     }
 
-    /** Whether or not to use the provider model behavior for the status bar icons */
+    /**
+     * Whether or not to use the provider model behavior for the status bar icons
+     */
     public boolean isCombinedStatusBarSignalIconsEnabled() {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(),
-            Settings.Secure.SHOW_COMBINED_STATUS_BAR_SIGNAL_ICONS,
-            mFlagReader.isEnabled(R.bool.flag_combined_status_bar_signal_icons) ? 1 : 0,
-            UserHandle.USER_CURRENT) == 1;
+                Settings.Secure.SHOW_COMBINED_STATUS_BAR_SIGNAL_ICONS,
+                isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS) ? 1 : 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     /** System setting for provider model behavior */
