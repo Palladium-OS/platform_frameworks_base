@@ -135,6 +135,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mThemedDrawable = new ThemedBatteryDrawable(context, frameColor);
         mCircleDrawable = new CircleBatteryDrawable(context, frameColor);
         mFullCircleDrawable = new FullCircleBatteryDrawable(context, frameColor);
+        mSlotBattery = getResources().getString(com.android.internal.R.string.status_bar_battery);
         atts.recycle();
 
         setupLayoutTransition();
