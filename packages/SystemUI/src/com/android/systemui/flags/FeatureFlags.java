@@ -87,7 +87,10 @@ public class FeatureFlags {
     }
 
     public boolean isMonetEnabled() {
-        return isEnabled(Flags.MONET);
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.USE_MONET,
+                isEnabled(Flags.MONET) ? 1 : 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     public boolean isPMLiteEnabled() {
