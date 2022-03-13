@@ -18,7 +18,7 @@ import dagger.Subcomponent;
         DependencyProvider.class,
         SystemUIBinder.class,
         SystemUIModule.class,
-        SystemUIPalladiumModule.class})
+        SystemUIPalladiumModule.class })
 public interface SysUIComponentPalladium extends SysUIComponent {
     @SysUISingleton
     @Subcomponent.Builder
