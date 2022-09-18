@@ -1054,7 +1054,14 @@ public class InternetDialogController implements AccessPointController.AccessPoi
     }
 
     void setHotspotEnabled(boolean enabled) {
-        mHotspotController.setHotspotEnabled(enabled);
+        if (mKeyguardStateController.isMethodSecure() && mKeyguardStateController.isShowing()) {
+            mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+            mCallback.dismissDialog();
+            mActivityStarter.postQSRunnableDismissingKeyguard(
+                    () -> mHotspotController.setHotspotEnabled(enabled));
+        } else {
+            mHotspotController.setHotspotEnabled(enabled);
+        }
     }
 
     boolean isDataSaverEnabled() {
