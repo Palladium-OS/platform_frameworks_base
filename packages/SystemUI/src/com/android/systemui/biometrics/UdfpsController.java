@@ -215,6 +215,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     private final Set<Callback> mCallbacks = new HashSet<>();
     private final int mUdfpsVendorCode;
 
+    private boolean mTriggerOnFingerDownForActionDown;
+
     @VisibleForTesting
     public static final VibrationAttributes UDFPS_VIBRATION_ATTRIBUTES =
             new VibrationAttributes.Builder()
@@ -694,12 +696,14 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                     // We need to persist its ID to track it during ACTION_MOVE that could include
                     // data for many other pointers because of multi-touch support.
                     mActivePointerId = event.getPointerId(0);
+                    mVelocityTracker.addMovement(event);
+                    if (mTriggerOnFingerDownForActionDown) {
                     final int idx = mActivePointerId == -1
                             ? event.getPointerId(0)
                             : event.findPointerIndex(mActivePointerId);
-                    mVelocityTracker.addMovement(event);
-                    onFingerDown(requestId, (int) event.getRawX(), (int) event.getRawY(),
-                            (int) event.getTouchMinor(idx), (int) event.getTouchMajor(idx));
+                        onFingerDown(requestId, (int) event.getRawX(), (int) event.getRawY(),
+                                (int) event.getTouchMinor(idx), (int) event.getTouchMajor(idx));
+                    }
                     handled = true;
                     mAcquiredReceived = false;
                 }
@@ -927,6 +931,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         udfpsShell.setUdfpsOverlayController(mUdfpsOverlayController);
 
         mUdfpsVendorCode = mContext.getResources().getInteger(com.android.systemui.R.integer.config_udfps_vendor_code);
+        mTriggerOnFingerDownForActionDown = mContext.getResources().getBoolean(
+                com.android.systemui.R.bool.config_udfpsTriggerOnFingerDownForActionDown);
     }
 
     /**
