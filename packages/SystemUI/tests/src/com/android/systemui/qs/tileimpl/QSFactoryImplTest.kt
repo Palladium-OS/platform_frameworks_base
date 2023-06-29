@@ -63,6 +63,8 @@ import org.mockito.Mockito.`when` as whenever
 import org.mockito.MockitoAnnotations
 
 private val specMap = mapOf(
+        "wifi" to WifiTile::class.java,
+        "cell" to CellularTile::class.java,
         "internet" to InternetTile::class.java,
         "bt" to BluetoothTile::class.java,
         "dnd" to DndTile::class.java,
@@ -101,6 +103,8 @@ class QSFactoryImplTest : SysuiTestCase() {
     @Mock(answer = Answers.RETURNS_SELF) private lateinit var customTileBuilder: CustomTile.Builder
     @Mock private lateinit var customTile: CustomTile
 
+    @Mock private lateinit var wifiTile: WifiTile
+    @Mock private lateinit var cellularTile: CellularTile
     @Mock private lateinit var internetTile: InternetTile
     @Mock private lateinit var bluetoothTile: BluetoothTile
     @Mock private lateinit var dndTile: DndTile
@@ -142,6 +146,8 @@ class QSFactoryImplTest : SysuiTestCase() {
         whenever(customTileBuilder.build()).thenReturn(customTile)
 
         val tileMap = mutableMapOf<String, Provider<QSTileImpl<*>>>(
+            "wifi" to Provider {wifiTile},
+            "cell" to Provider {cellularTile},            
             "internet" to Provider { internetTile },
             "bt" to Provider { bluetoothTile },
             "dnd" to Provider { dndTile },
