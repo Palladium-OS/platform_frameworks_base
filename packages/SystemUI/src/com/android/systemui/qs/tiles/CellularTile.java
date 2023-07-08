@@ -65,7 +65,7 @@ import javax.inject.Inject;
 
 /** Quick settings tile: Cellular **/
 public class CellularTile extends SecureQSTile<SignalState> {
-    public static final String TILE_SPEC = "cellular";
+    public static final String TILE_SPEC = "cell";
     private static final String ENABLE_SETTINGS_DATA_PLAN = "enable.settings.data.plan";
 
     private final NetworkController mController;
