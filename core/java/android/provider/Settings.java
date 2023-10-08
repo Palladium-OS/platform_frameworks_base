@@ -11822,6 +11822,28 @@ public final class Settings {
         public static final String QS_SHOW_DATA_USAGE = "qs_show_data_usage";
 
         /**
+         * Parameter for locking immersive system bars.
+         *
+         * The value "1", don't open Translucent StatusBar and NavigationBar on Immersive mode.
+         * The value "0", restore to system default behavior.
+         *
+         * @hide
+         */
+        public static final String LOCK_IMMERSIVE_SYSUI
+                = "lock_immersive_system_ui";
+
+        /**
+         * Parameter for locking edge back gesture on Gesture Navigation Mode.
+         *
+         * The value "1", disable swipe left/right edge on Gesture Navigation mode.
+         * The value "0", restore to system default behavior.
+         *
+         * @hide
+         */
+        public static final String LOCK_EDGE_BACK_GESTURE
+                = "lock_edge_back_gesture";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
@@ -12556,30 +12578,6 @@ public final class Settings {
         @Readable
         public static final String DEVELOPMENT_ENABLE_FREEFORM_WINDOWS_SUPPORT
                 = "enable_freeform_support";
-
-        /**
-         * Parameter for locking immersive system bars.
-         *
-         * The value "1", don't open Translucent StatusBar and NavigationBar on Immersive mode.
-         * The value "0", restore to system default behavior.
-         *
-         * @hide
-         */
-        @SystemApi
-        public static final String LOCK_IMMERSIVE_SYSUI
-                = "lock_immersive_system_ui";
-
-        /**
-         * Parameter for locking edge back gesture on Gesture Navigation Mode.
-         *
-         * The value "1", disable swipe left/right edge on Gesture Navigation mode.
-         * The value "0", restore to system default behavior.
-         *
-         * @hide
-         */
-        @SystemApi
-        public static final String LOCK_EDGE_BACK_GESTURE
-                = "lock_edge_back_gesture";
 
         /**
          * Whether to enable experimental desktop mode on secondary displays.
