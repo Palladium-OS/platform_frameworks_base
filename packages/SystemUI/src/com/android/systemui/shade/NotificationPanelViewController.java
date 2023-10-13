@@ -1997,6 +1997,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 }
             }
         });
+        if (!mScrimController.isScreenOn()) {
+            animator.setDuration(0);
+        }
         setAnimator(animator);
         animator.start();
     }
