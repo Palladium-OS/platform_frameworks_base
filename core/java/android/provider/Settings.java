@@ -11712,6 +11712,17 @@ public final class Settings {
         public static final String LOCK_SCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
 
         /**
+         * Parameter for Pocket Mode
+         *
+         * The value "1", Enable Pocket Mode
+         * The value "0", Disables Pocket Mode
+         *
+         * @hide
+         */
+        public static final String POCKET_MODE_ENABLED
+                = "pocket_mode_enabled";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
