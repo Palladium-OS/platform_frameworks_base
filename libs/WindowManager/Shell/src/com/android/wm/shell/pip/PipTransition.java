@@ -167,7 +167,17 @@ public class PipTransition extends PipTransitionController {
             @NonNull SurfaceControl.Transaction startTransaction,
             @NonNull SurfaceControl.Transaction finishTransaction,
             @NonNull Transitions.TransitionFinishCallback finishCallback) {
-        final TransitionInfo.Change currentPipTaskChange = findCurrentPipTaskChange(info);
+        TransitionInfo.Change pipTaskChange = findCurrentPipTaskChange(info);
+        if (pipTaskChange != null && !mPipTransitionState.isInPip()) {
+            final SurfaceControl leash = pipTaskChange.getLeash();
+            if(leash == null || !leash.isValid()) {
+               ProtoLog.w(ShellProtoLogGroup.WM_SHELL_PICTURE_IN_PICTURE,
+                    "%s: Invalid leash on updatePipForUnhandledTransition: %s", TAG, leash);
+               mCurrentPipTaskToken = null;
+               pipTaskChange = null;
+            }
+        }
+        final TransitionInfo.Change currentPipTaskChange = pipTaskChange;
         final TransitionInfo.Change fixedRotationChange = findFixedRotationChange(info);
         mInFixedRotation = fixedRotationChange != null;
         mEndFixedRotation = mInFixedRotation
