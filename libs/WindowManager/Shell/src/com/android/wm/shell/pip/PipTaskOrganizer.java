@@ -518,11 +518,12 @@ public class PipTaskOrganizer implements ShellTaskOrganizer.TaskListener,
     public void exitPip(int animationDurationMs, boolean requestEnterSplit) {
         if (!mPipTransitionState.isInPip()
                 || mPipTransitionState.getTransitionState() == PipTransitionState.EXITING_PIP
-                || mToken == null) {
+                || mToken == null
+                || (mLeash == null && mPipTransitionState.hasEnteredPip())) {
             ProtoLog.wtf(ShellProtoLogGroup.WM_SHELL_PICTURE_IN_PICTURE,
                     "%s: Not allowed to exitPip in current state"
-                            + " mState=%d mToken=%s", TAG, mPipTransitionState.getTransitionState(),
-                    mToken);
+                            + " mState=%d mToken=%s mLeash=%s", TAG,
+                                   mPipTransitionState.getTransitionState(), mToken, mLeash);
             return;
         }
 
