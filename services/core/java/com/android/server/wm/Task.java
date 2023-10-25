@@ -22,6 +22,7 @@ import static android.app.ActivityTaskManager.INVALID_WINDOWING_MODE;
 import static android.app.ActivityTaskManager.RESIZE_MODE_FORCED;
 import static android.app.ActivityTaskManager.RESIZE_MODE_SYSTEM_SCREEN_ROTATION;
 import static android.app.ITaskStackListener.FORCED_RESIZEABLE_REASON_SPLIT_SCREEN;
+import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_STANDARD;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
@@ -6518,7 +6519,8 @@ class Task extends TaskFragment {
             }
 
             if (mActivityType != ACTIVITY_TYPE_STANDARD
-                    && mActivityType != ACTIVITY_TYPE_UNDEFINED) {
+                    && mActivityType != ACTIVITY_TYPE_UNDEFINED
+                    && mActivityType != ACTIVITY_TYPE_RECENTS) {
                 // For now there can be only one root task of a particular non-standard activity
                 // type on a display. So, get that ignoring whatever windowing mode it is
                 // currently in.
