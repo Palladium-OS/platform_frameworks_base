@@ -4655,6 +4655,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             return;
         }
 
+        boolean changed = false;
         final SurfaceControl newParent = computeImeParent();
         if (newParent != null && newParent != mInputMethodSurfaceParent) {
             mInputMethodSurfaceParent = newParent;
@@ -4665,9 +4666,23 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             // When surface parent is removed, the relative layer will also be removed. We need to
             // do a force update to make sure there is a layer set for the new parent.
             assignRelativeLayerForIme(getSyncTransaction(), true /* forceUpdate */);
-            scheduleAnimation();
+            changed = true;
 
             mWmService.mH.post(() -> InputMethodManagerInternal.get().onImeParentChanged());
+        } else if (mImeControlTarget != null && mImeControlTarget == mImeLayeringTarget) {
+            // Even if the IME surface parent is not changed, the layer target belonging to the
+            // parent may have changes. Then attempt to reassign if the IME control target is
+            // possible to be the relative layer.
+            final SurfaceControl lastRelativeLayer = mImeWindowsContainer.getLastRelativeLayer();
+            if (lastRelativeLayer != mImeLayeringTarget.mSurfaceControl) {
+                assignRelativeLayerForIme(getSyncTransaction(), false /* forceUpdate */);
+                if (lastRelativeLayer != mImeWindowsContainer.getLastRelativeLayer()) {
+                    changed = true;
+                }
+            }
+        }
+        if (changed) {
+            scheduleAnimation();
         }
     }
 
