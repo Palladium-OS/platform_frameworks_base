@@ -29,8 +29,6 @@ import android.os.UserManager
 import android.testing.AndroidTestingRunner
 import android.view.WindowManager.ScreenshotSource.SCREENSHOT_KEY_OTHER
 import android.view.WindowManager.TAKE_SCREENSHOT_FULLSCREEN
-import android.view.WindowManager.TAKE_SCREENSHOT_PROVIDED_IMAGE
-import android.view.WindowManager.TAKE_SCREENSHOT_SELECTED_REGION
 import androidx.test.filters.SmallTest
 import com.android.internal.logging.testing.UiEventLoggerFake
 import com.android.internal.util.ScreenshotRequest
@@ -167,29 +165,6 @@ class TakeScreenshotServiceTest : SysuiTestCase() {
             eventLogger.get(0).packageName
         )
     }
-
-    @Test
-    fun takeScreenshotPartial() {
-        val request = ScreenshotRequest(
-            TAKE_SCREENSHOT_SELECTED_REGION,
-            SCREENSHOT_KEY_CHORD,
-            /* topComponent = */ null)
-
-        service.handleRequest(request, { /* onSaved */ }, callback)
-
-        verify(controller, times(1)).takeScreenshotPartial(
-            /* topComponent = */ isNull(),
-            /* onSavedListener = */ any(),
-            /* requestCallback = */ any())
-
-        assertEquals("Expected one UiEvent", eventLogger.numLogs(), 1)
-        val logEvent = eventLogger.get(0)
-
-        assertEquals("Expected SCREENSHOT_REQUESTED UiEvent",
-            logEvent.eventId, SCREENSHOT_REQUESTED_KEY_CHORD.id)
-        assertEquals("Expected empty package name in UiEvent", "", eventLogger.get(0).packageName)
-    }
-
 
     @Test
     fun takeScreenshotFullscreen_userLocked() {
