@@ -76,6 +76,9 @@ public class AutomaticBrightnessStrategy {
     // If the auto-brightness model for the last manual changes done by the user.
     private boolean mIsShortTermModelActive = false;
 
+    // Whether auto brightness is applied one shot when screen is turned on
+    private boolean mAutoBrightnessOneShot;
+
     // The BrightnessConfiguration currently being used
     // Todo(273543270): BrightnessConfiguration is an internal implementation detail of
     //  AutomaticBrightnessController, and AutomaticBrightnessStrategy shouldn't be aware of its
@@ -87,6 +90,7 @@ public class AutomaticBrightnessStrategy {
         mContext = context;
         mDisplayId = displayId;
         mAutoBrightnessAdjustment = getAutoBrightnessAdjustmentSetting();
+        mAutoBrightnessOneShot = getAutoBrightnessOneShotSetting();
         mPendingAutoBrightnessAdjustment = PowerManager.BRIGHTNESS_INVALID_FLOAT;
         mTemporaryAutoBrightnessAdjustment = PowerManager.BRIGHTNESS_INVALID_FLOAT;
     }
@@ -367,6 +371,7 @@ public class AutomaticBrightnessStrategy {
         // slider, but hasn't settled to any value yet
         float autoBrightnessAdjustment = updateTemporaryAutoBrightnessAdjustments();
         mIsShortTermModelActive = false;
+        mAutoBrightnessOneShot = getAutoBrightnessOneShotSetting();
         // Configure auto-brightness.
         if (mAutomaticBrightnessController != null) {
             // Accommodate user changes if any in the auto-brightness model
@@ -374,7 +379,7 @@ public class AutomaticBrightnessStrategy {
                     brightnessConfiguration,
                     lastUserSetScreenBrightness,
                     userSetBrightnessChanged, autoBrightnessAdjustment,
-                    mAutoBrightnessAdjustmentChanged, policy, mShouldResetShortTermModel);
+                    mAutoBrightnessAdjustmentChanged, policy, mShouldResetShortTermModel, mAutoBrightnessOneShot);
             mShouldResetShortTermModel = false;
             // We take note if the user brightness point is still being used in the current
             // auto-brightness model.
@@ -403,5 +408,11 @@ public class AutomaticBrightnessStrategy {
         final float adj = Settings.System.getFloatForUser(mContext.getContentResolver(),
                 Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, 0.0f, UserHandle.USER_CURRENT);
         return Float.isNaN(adj) ? 0.0f : BrightnessUtils.clampBrightnessAdjustment(adj);
+    }
+
+    private boolean getAutoBrightnessOneShotSetting() {
+        return Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.AUTO_BRIGHTNESS_ONE_SHOT,
+                0, UserHandle.USER_CURRENT) == 1;
     }
 }
