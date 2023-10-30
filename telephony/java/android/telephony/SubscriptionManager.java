@@ -2360,6 +2360,12 @@ public class SubscriptionManager {
         }
     }
 
+    /** @hide */
+    @UnsupportedAppUsage
+    public int getDefaultDataPhoneId() {
+        return getPhoneId(getDefaultDataSubscriptionId());
+    }
+
     /**
      * Returns the system's default data subscription id.
      *
