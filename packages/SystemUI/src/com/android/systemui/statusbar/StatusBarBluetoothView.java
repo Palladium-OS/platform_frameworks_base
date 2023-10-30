@@ -206,13 +206,39 @@ public class StatusBarBluetoothView extends FrameLayout implements StatusIconDis
         return needsLayout;
     }
 
+    private int getBluetoothBatteryDrawable(int batteryLevel){
+        int iconId = -1;
+        if (batteryLevel == 100) {
+            iconId = R.drawable.ic_bluetooth_battery_10;
+        } else if (batteryLevel >= 90) {
+            iconId = R.drawable.ic_bluetooth_battery_9;
+        } else if (batteryLevel >= 80) {
+            iconId = R.drawable.ic_bluetooth_battery_8;
+        } else if (batteryLevel >= 70) {
+            iconId = R.drawable.ic_bluetooth_battery_7;
+        } else if (batteryLevel >= 60) {
+            iconId = R.drawable.ic_bluetooth_battery_6;
+        } else if (batteryLevel >= 50) {
+            iconId = R.drawable.ic_bluetooth_battery_5;
+        } else if (batteryLevel >= 40) {
+            iconId = R.drawable.ic_bluetooth_battery_4;
+        } else if (batteryLevel >= 30) {
+            iconId = R.drawable.ic_bluetooth_battery_3;
+        } else if (batteryLevel >= 20) {
+            iconId = R.drawable.ic_bluetooth_battery_2;
+        } else if (batteryLevel >= 10) {
+            iconId = R.drawable.ic_bluetooth_battery_1;
+        } else if (batteryLevel == 0) {
+            iconId = R.drawable.ic_bluetooth_battery_0;
+        }
+        return iconId;
+    }
+
     private void updateBatteryIcon(int batteryLevel) {
         mBatteryLevel = batteryLevel;
         if (batteryLevel >= 0 && batteryLevel <= 100) {
             mBatteryIcon.setVisibility(View.VISIBLE);
-            mBatteryIcon.setImageDrawable(mContext.getDrawable(
-                mContext.getResources().getIdentifier("ic_bluetooth_battery_"
-                + batteryLevel/10, "drawable", mContext.getPackageName())));
+            mBatteryIcon.setImageDrawable(mContext.getDrawable(getBluetoothBatteryDrawable(batteryLevel)));
             updateBatteryColor();
         } else {
             mBatteryIcon.setVisibility(View.GONE);
