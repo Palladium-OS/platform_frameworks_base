@@ -47,6 +47,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.pipeline.domain.interactor.PanelInteractor;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
@@ -70,6 +71,7 @@ public class VpnTile extends QSTileImpl<BooleanState> {
     @Inject
     public VpnTile(
             QSHost host,
+            QsEventLogger uiEventLogger,
             @Background Looper backgroundLooper,
             @Main Handler mainHandler,
             FalsingManager falsingManager,
@@ -80,7 +82,7 @@ public class VpnTile extends QSTileImpl<BooleanState> {
             SecurityController securityController,
             KeyguardStateController keyguardStateController,
             PanelInteractor panelInteractor) {
-        super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
+        super(host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
         mController = securityController;
         mKeyguard = keyguardStateController;

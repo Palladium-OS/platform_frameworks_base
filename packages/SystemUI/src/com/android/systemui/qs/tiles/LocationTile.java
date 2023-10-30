@@ -36,6 +36,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.logging.QSLogger;
@@ -95,7 +96,7 @@ public class LocationTile extends SecureQSTile<BooleanState> {
         }
 
         final boolean wasEnabled = mState.value;
-        mHost.openPanels();
+        mPanelInteractor.openPanels();
         mController.setLocationEnabled(!wasEnabled);
     }
 

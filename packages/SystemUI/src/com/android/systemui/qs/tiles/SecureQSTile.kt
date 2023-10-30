@@ -19,6 +19,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import com.android.systemui.plugins.qs.QSTile
+import com.android.systemui.qs.QsEventLogger
 import com.android.systemui.qs.QSHost
 import com.android.systemui.plugins.FalsingManager
 import com.android.internal.logging.MetricsLogger
@@ -29,12 +30,12 @@ import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.qs.tileimpl.QSTileImpl
 
 internal abstract class SecureQSTile<TState : QSTile.State> protected constructor(
-    host: QSHost, backgroundLooper: Looper, mainHandler: Handler, falsingManager: FalsingManager,
+    host: QSHost, uiEventLogger: QsEventLogger, backgroundLooper: Looper, mainHandler: Handler, falsingManager: FalsingManager,
     metricsLogger: MetricsLogger, statusBarStateController: StatusBarStateController,
     activityStarter: ActivityStarter, qsLogger: QSLogger,
     private val mKeyguard: KeyguardStateController,
 ) : QSTileImpl<TState>(
-    host, backgroundLooper, mainHandler, falsingManager, metricsLogger, statusBarStateController,
+    host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger, statusBarStateController,
     activityStarter, qsLogger,
 ) {
     abstract override fun newTileState(): TState
