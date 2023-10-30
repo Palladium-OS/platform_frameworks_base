@@ -22,7 +22,6 @@ import com.android.systemui.qs.tiles.CompassTile
 import com.android.systemui.qs.tiles.CPUInfoTile
 import com.android.systemui.qs.tiles.FPSInfoTile
 import com.android.systemui.qs.tiles.MonoToggleTile
-import com.android.systemui.qs.tiles.ScreenshotTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -59,12 +58,6 @@ interface PalladiumUtilityModule {
     @Binds
     @IntoMap
     @StringKey(MonoToggleTile.TILE_SPEC)
-    fun bindMonoToggleTile(monoToggleTile: MonoToggleTile): QSTileImpl<*>  
-
-    /** Inject ScreenshotTile into tileMap in QSModule */
-    @Binds
-    @IntoMap
-    @StringKey(ScreenshotTile.TILE_SPEC)
-    fun bindScreenshotTile(screenshotTile: ScreenshotTile): QSTileImpl<*>            
+    fun bindMonoToggleTile(monoToggleTile: MonoToggleTile): QSTileImpl<*>            
    
 }
