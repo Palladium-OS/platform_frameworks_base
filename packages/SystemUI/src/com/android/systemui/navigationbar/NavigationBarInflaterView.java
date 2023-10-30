@@ -97,6 +97,31 @@ public class NavigationBarInflaterView extends FrameLayout {
                 self.onNavigationModeChanged(mode);
             }
         }
+
+        @Override
+        public void onNavBarLayoutInverseChanged(boolean inverse) {
+            NavigationBarInflaterView self = mSelf.get();
+            if (self != null) {
+                self.onNavBarLayoutInverseChanged(inverse);
+            }
+        }
+
+        @Override
+        public void onNavBarCustomLayoutChanged(String layout) {
+            NavigationBarInflaterView self = mSelf.get();
+            if (self != null) {
+                self.onNavBarCustomLayoutChanged(layout);
+            }
+        }
+
+        @Override
+        public void onNavigationHandleWidthModeChanged(int mode) {
+            NavigationBarInflaterView self = mSelf.get();
+            if (self != null) {
+                self.onNavigationHandleWidthModeChanged(mode);
+            }
+        }                
+
     }
 
     private final Listener mListener;
@@ -131,7 +156,6 @@ public class NavigationBarInflaterView extends FrameLayout {
         mListener = new Listener(this);
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(mListener);
         final NavigationModeController controller = Dependency.get(NavigationModeController.class);
-        mNavBarMode = controller.addListener(this);
         mHomeHandleWidthMode = controller.getNavigationHandleWidthMode();
         mNavBarLayoutInverse = controller.shouldInvertNavBarLayout();
         mCustomLayout = controller.getCustomNavbarLayout();
@@ -183,8 +207,7 @@ public class NavigationBarInflaterView extends FrameLayout {
         onNavBarCustomLayoutChanged(mCustomLayout);
     }
 
-    @Override
-    public void onNavBarLayoutInverseChanged(boolean inverse) {
+    private void onNavBarLayoutInverseChanged(boolean inverse) {
         if (mNavBarLayoutInverse == inverse) return;
         mNavBarLayoutInverse = inverse;
         if (mNavBarMode != NAV_BAR_MODE_3BUTTON) return;
@@ -203,8 +226,7 @@ public class NavigationBarInflaterView extends FrameLayout {
         }
     }
 
-    @Override
-    public void onNavBarCustomLayoutChanged(String layout) {
+    private void onNavBarCustomLayoutChanged(String layout) {
         if (mNavBarMode == NAV_BAR_MODE_GESTURAL) return;
         if (mCurrentLayout == null || !mCurrentLayout.equals(layout)) {
             mUsingCustomLayout = layout != null && !layout.equals("default");
@@ -214,8 +236,7 @@ public class NavigationBarInflaterView extends FrameLayout {
         }
     }
 
-    @Override
-    public void onNavigationHandleWidthModeChanged(int mode) {
+    private void onNavigationHandleWidthModeChanged(int mode) {
         if (mHomeHandleWidthMode != mode) {
             mHomeHandleWidthMode = mode;
             if (QuickStepContract.isGesturalMode(mNavBarMode)) {
