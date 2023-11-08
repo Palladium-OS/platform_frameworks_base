@@ -208,18 +208,17 @@ public class PixelPropsUtils {
                     Log.e(TAG, "Failed to register task stack listener!", e);
                 }
                 if (was) return true;
-                // Alter build parameters to pixel 2 for avoiding hardware attestation enforcement
-                setPropValue("BRAND", "google");
-                setPropValue("PRODUCT", "walleye");
-                setPropValue("MODEL", "Pixel 2");
-                setPropValue("MANUFACTURER", "Google");
-                setPropValue("DEVICE", "walleye");
-                setPropValue("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
-                setPropValue("ID", "OPM1.171019.011");
+
+                dlog("Spoofing build for GMS");
+                // Alter build parameters to Zenfone 4 for avoiding hardware attestation enforcement
+                setPropValue("BRAND", "Asus");
+                setPropValue("PRODUCT", "WW_Phone");
+                setPropValue("MODEL", "ASUS_X00HD");
+                setPropValue("MANUFACTURER", "Asus");
+                setPropValue("DEVICE", "ASUS_X00HD_4");
+                setPropValue("FINGERPRINT", "asus/WW_Phone/ASUS_X00HD_4:7.1.1/NMF26F/14.2016.1801.372-20180119:user/release-keys");
                 setPropValue("TYPE", "user");
                 setPropValue("TAGS", "release-keys");
-                setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.O_MR1);
-                setVersionFieldString("SECURITY_PATCH", "2017-12-05");
                 return true;
             }
         }
@@ -292,29 +291,6 @@ public class PixelPropsUtils {
             field.setAccessible(false);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, "Failed to set prop " + key, e);
-        }
-    }
-
-    private static void setVersionField(String key, Object value) {
-        try {
-            dlog("Defining version field " + key + " to " + value.toString());
-            Field field = Build.VERSION.class.getDeclaredField(key);
-            field.setAccessible(true);
-            field.set(null, value);
-            field.setAccessible(false);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e(TAG, "Failed to set version field " + key, e);
-        }
-    }
-
-    private static void setVersionFieldString(String key, String value) {
-        try {
-            Field field = Build.VERSION.class.getDeclaredField(key);
-            field.setAccessible(true);
-            field.set(null, value);
-            field.setAccessible(false);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e(TAG, "Failed to spoof Build." + key, e);
         }
     }
 
