@@ -547,6 +547,17 @@ public class NotificationShadeWindowViewController {
         mStatusBarViewController = statusBarViewController;
     }
 
+    public void setDoubleTapToSleepGesture() {
+        boolean isDoubleTapToSleepEnabled = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+        if (mNotificationPanelViewController != null) {
+            mNotificationPanelViewController.setDoubleTapToSleep(isDoubleTapToSleepEnabled);
+        }
+        if (mPulsingGestureListener != null) {
+            mPulsingGestureListener.setDoubleTapToSleep(isDoubleTapToSleepEnabled);
+        }
+    }
+
     @VisibleForTesting
     void setDragDownHelper(DragDownHelper dragDownHelper) {
         mDragDownHelper = dragDownHelper;

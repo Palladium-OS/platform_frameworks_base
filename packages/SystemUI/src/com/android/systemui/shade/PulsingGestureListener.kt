@@ -65,11 +65,6 @@ class PulsingGestureListener @Inject constructor(
     private var doubleTapEnabled = false
     private var singleTapEnabled = false
     private var doubleTapEnabledNative = false
-
-    companion object {
-        internal val DOUBLE_TAP_SLEEP_GESTURE =
-            "system:" + Settings.System.DOUBLE_TAP_SLEEP_GESTURE
-    }
     private var doubleTapToSleepEnabled = false
     private val quickQsOffsetHeight: Int
 
@@ -84,20 +79,21 @@ class PulsingGestureListener @Inject constructor(
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE ->
                     singleTapEnabled = ambientDisplayConfiguration.tapGestureEnabled(
                             userTracker.userId)
-                DOUBLE_TAP_SLEEP_GESTURE ->
-                    doubleTapToSleepEnabled = TunerService.parseIntegerSwitch(value, true)
             }
         }
         tunerService.addTunable(tunable,
                 Settings.Secure.DOUBLE_TAP_TO_WAKE,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
-                Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
-                DOUBLE_TAP_SLEEP_GESTURE)
+                Settings.Secure.DOZE_TAP_SCREEN_GESTURE)
 
         dumpManager.registerDumpable(this)
 
         quickQsOffsetHeight = context.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height)
+    }
+
+    fun setDoubleTapToSleep(isDoubleTapEnabled: Boolean) {
+        doubleTapToSleepEnabled = isDoubleTapEnabled
     }
 
     override fun onSingleTapUp(e: MotionEvent): Boolean {

@@ -3660,6 +3660,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_BLUR),
                     false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -3669,16 +3672,27 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                     Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
                 setLockScreenMediaBlurLevel();
             }
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
+                setDoubleTapToSleepGesture();
+            }
         }
 
         public void update() {
             setLockScreenMediaBlurLevel();
+            setDoubleTapToSleepGesture();
         }
     }
 
     private void setLockScreenMediaBlurLevel() {
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaBlurLevel();
+        }
+    }
+
+    private void setDoubleTapToSleepGesture() {
+        if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.setDoubleTapToSleepGesture();
         }
     }
 
